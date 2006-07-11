@@ -1,3 +1,5 @@
+from itertools import imap
+
 from altgraph.compat import *
 from altgraph.Graph import Graph
 from altgraph.GraphUtil import filter_stack
@@ -29,6 +31,18 @@ class ObjectGraph(object):
         start = self.getRawIdent(start)
         return self.graph.iterdata(start=start, condition=condition)
 
+    def get_edges(self, node):
+        start = self.getRawIdent(node)
+        _, _, outraw, incraw = self.graph.describe_node(start)
+        def iter_edges(lst, n):
+            seen = set()
+            for tpl in imap(self.graph.describe_edge, lst):
+                ident = tpl[n]
+                if ident not in seen:
+                    yield self.findNode(ident)
+                    seen.add(ident)
+        return iter_edges(outraw, 3), iter_edges(incraw, 2)
+    
     def filterStack(self, filters):
         """
         Filter the ObjectGraph in-place by removing all edges to nodes that
