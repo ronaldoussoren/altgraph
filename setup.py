@@ -5,7 +5,7 @@ ez_setup.use_setuptools()
 
 from setuptools import setup, Extension
 
-VERSION = '0.6.7'
+VERSION = '0.6.8'
 DESCRIPTION = "Python graph (network) package"
 LONG_DESCRIPTION = """
 altgraph is a fork of graphlib: a graph (network) package for constructing
