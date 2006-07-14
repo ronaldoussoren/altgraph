@@ -30,5 +30,11 @@ def test_altgraph():
 
     assert GraphAlgo.shortest_path(g, 1, 12) == [1, 2, 4, 5, 7, 13, 11, 12]
 
+def test_compat():
+    from altgraph.compat import ireversed
+    assert list(ireversed([1,2,3])) == [3,2,1]
+    assert "".join(ireversed("asd")) == "dsa"
+
 if __name__ == '__main__':
     test_altgraph()
+    test_compat()

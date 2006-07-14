@@ -179,5 +179,6 @@ def ireversed(iterable):
     if isinstance(iterable, (list, tuple)):
         for i in xrange(len(iterable)-1, -1, -1):
             yield iterable[i]
-    for obj in reversed(iterable):
-        yield obj
+    else:
+        for obj in reversed(iterable):
+            yield obj
