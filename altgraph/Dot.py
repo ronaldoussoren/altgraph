@@ -35,6 +35,19 @@ Here is a typical usage::
     # save dot file as gif image into the graph.gif file
     dot.save_img(file_name='graph', file_type='gif')
 
+Directed graph and non-directed graph
+-------------------------------------
+
+Dot class can use for both directed graph and non-directed graph
+by passing B{graphtype} parameter.
+
+Example::
+    # create directed graph(default)
+    dot = Dot.Dot(graph, graphtype="digraph")
+
+    # create non-directed graph
+    dot = Dot.Dot(graph, graphtype="graph")
+
 Customizing the output
 ----------------------
 
@@ -55,6 +68,7 @@ Example::
     dot.edge_style(1, 2, style='dotted')
     dot.edge_style(3, 5, arrowhead='dot', label='binds', labelangle='90')
     dot.edge_style(4, 5, arrowsize=2, style='bold')
+
 
 B{Observation}: dotty (invoked via L{Dot.display}) may not be able to
 display all graphics styles. To verify the output save it to an image file
@@ -99,11 +113,14 @@ class Dot(object):
     For detailed example usage see the L{Dot} module documentation.
     '''
 
-    def __init__(self, graph=None, nodes=None, edgefn=None, nodevisitor=None, edgevisitor=None, name="G", dot='dot', dotty='dotty', neato='neato'):
+    def __init__(self, graph=None, nodes=None, edgefn=None, nodevisitor=None, edgevisitor=None, name="G", dot='dot', dotty='dotty', neato='neato', graphtype="digraph"):
         '''
         Initialization.
         '''
         self.name, self.attr = name, {}
+        
+        assert graphtype in ['graph', 'digraph']
+        self.type = graphtype
 
         self.temp_dot = "tmp_dot.dot"
         self.temp_neo = "tmp_neo.dot"
@@ -187,7 +204,10 @@ class Dot(object):
 
     def iterdot(self):
         # write graph title
-        yield 'digraph %s {\n' % (self.name,)
+        if self.type == 'digraph':
+            yield 'digraph %s {\n' % (self.name,)
+        elif self.type == 'graph':
+            yield 'graph %s {\n' % (self.name,)
 
         # write overall graph attributes
         for attr_name, attr_value in self.attr.iteritems():
@@ -208,7 +228,10 @@ class Dot(object):
         # write edge attributes
         for head in self.edges:
             for tail in self.edges[head]:
-                yield '\t"%s" -> "%s" [' % (head, tail)
+                if self.type == 'digraph':
+                    yield '\t"%s" -> "%s" [' % (head, tail)
+                else:
+                    yield '\t"%s" -- "%s" [' % (head, tail)
                 for attr_name, attr_value in self.edges[head][tail].iteritems():
                     yield cpatt % (attr_name, attr_value)
                 yield epatt
