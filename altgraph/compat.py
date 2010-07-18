@@ -1,7 +1,12 @@
 """
 Python 2.4-like compatibility library for Python 2.3
 """
-from itertools import *
+from itertools import izip, imap
+try:
+    from itertools import tee, groupby
+
+except ImportError:
+    pass
 
 #
 # builtins from 2.4

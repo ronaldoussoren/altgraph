@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 
-import ez_setup
-ez_setup.use_setuptools()
 
-from setuptools import setup, Extension
+try:
+    import setuptools
 
-VERSION = '0.6.8'
+except ImportError:
+    import distribute_setup
+    distribute_setup.use_setuptools()
+
+from setuptools import setup
+import sys
+
+VERSION = '0.7.0'
 DESCRIPTION = "Python graph (network) package"
 LONG_DESCRIPTION = """
 altgraph is a fork of graphlib: a graph (network) package for constructing
@@ -21,10 +27,16 @@ CLASSIFIERS = filter(None, map(str.strip,
 Intended Audience :: Developers
 License :: OSI Approved :: MIT License
 Programming Language :: Python
+Programming Language :: Python :: 3
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Scientific/Engineering :: Mathematics
 Topic :: Scientific/Engineering :: Visualization
 """.splitlines()))
+
+if sys.version_info[0] == 3:
+    extra_args = dict(use_2to3=True)
+else:
+    extra_args = dict()
 
 setup(
     name="altgraph",
@@ -39,4 +51,5 @@ setup(
     packages=['altgraph'],
     platforms=['any'],
     zip_safe=True,
+    **extra_args
 )
