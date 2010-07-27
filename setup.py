@@ -20,6 +20,22 @@ graphviz output.
 
 altgraph includes some additional usage of Python 2.3+ features and
 enhancements related to modulegraph and macholib.
+
+NEWS
+====
+
+0.7.0
+-----
+
+This is a minor feature release.
+
+Features:
+
+- Support for Python 3
+
+- It is now possible to run tests using 'python setup.py test'
+
+  (The actual testsuite is still very minimal though)
 """
 
 CLASSIFIERS = filter(None, map(str.strip,
@@ -27,6 +43,7 @@ CLASSIFIERS = filter(None, map(str.strip,
 Intended Audience :: Developers
 License :: OSI Approved :: MIT License
 Programming Language :: Python
+Programming Language :: Python :: 2
 Programming Language :: Python :: 3
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Scientific/Engineering :: Mathematics
@@ -50,6 +67,7 @@ setup(
     license="MIT License",
     packages=['altgraph'],
     platforms=['any'],
+    test_suite='testsuite',
     zip_safe=True,
     **extra_args
 )

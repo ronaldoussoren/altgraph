@@ -25,11 +25,6 @@ The package contains the following modules:
     -  the L{GraphUtil} contains functions for generating, reading and saving graphs
     -  the L{Dot}  contains functions for displaying graphs via U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}.
 
-Download
---------
-
-Download the  U{python source code<../dist>}.
-
 Installation
 ------------
 
@@ -42,10 +37,9 @@ how to customize the install procedure read the output of::
 
     python setup.py --help install
 
-To verify the installation procedure switch to the test directory and run the
-test_graphib.py file that is located there::
+To verify that the code works run the test suite::
 
-    python test_altgraph.py
+    python setup.py test
 
 Example usage
 -------------
@@ -127,7 +121,7 @@ THE SOFTWARE.
 
 '''
 
-__version__ = '0.6.8'
+__version__ = '0.7.0'
 
 class GraphError(ValueError):
     pass
