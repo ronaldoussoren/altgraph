@@ -11,7 +11,7 @@ except ImportError:
 from setuptools import setup
 import sys
 
-VERSION = '0.7.0'
+VERSION = '0.7.1'
 DESCRIPTION = "Python graph (network) package"
 LONG_DESCRIPTION = """
 altgraph is a fork of graphlib: a graph (network) package for constructing
@@ -63,6 +63,8 @@ setup(
     classifiers=CLASSIFIERS,
     author="Bob Ippolito",
     author_email="bob@redivi.com",
+    maintainer="Ronald Oussoren",
+    maintainer_email="ronaldoussoren@mac.com",
     url="http://undefined.org/python/#altgraph",
     license="MIT License",
     packages=['altgraph'],
