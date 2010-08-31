@@ -1,5 +1,6 @@
 '''
 Functions providing various graph statistics
+============================================
 '''
 import sys
 

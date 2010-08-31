@@ -1,0 +1,2 @@
+.. automodule:: altgraph.GraphAlgo
+   :members:

@@ -1,3 +1,11 @@
+"""
+Graph of objects with an identifier
+===================================
+
+A graph of objects that have a "graphident" attribute.
+graphident is the key for the object in the graph
+"""
+
 from itertools import imap
 
 from altgraph.compat import *
@@ -154,7 +162,7 @@ class ObjectGraph(object):
         Print a debug message with the given level
         """
         if s and level <= self.debug:
-            print "%s%s %s" % ("    " * self.indent, s, ' '.join(map(repr, args)))
+            print "%s%s %s" % ("  " * self.indent, s, ' '.join(map(repr, args)))
 
     def msgin(self, level, s, *args):
         """

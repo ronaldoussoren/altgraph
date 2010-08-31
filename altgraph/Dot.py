@@ -78,14 +78,17 @@ Valid attributes
 ----------------
 
     - dot styles, passed via the L{Dot.style} method::
+
         rankdir = 'LR'   (draws the graph horizontally, left to right)
         ranksep = number (rank separation in inches)
 
     - node attributes, passed via the L{Dot.node_style} method::
+
         style = 'filled' | 'invisible' | 'diagonals' | 'rounded'
         shape = 'box' | 'ellipse' | 'circle' | 'point' | 'triangle'
 
     - edge attributes, passed via the L{Dot.edge_style} method::
+
         style     = 'dashed' | 'dotted' | 'solid' | 'invis' | 'bold'
         arrowhead = 'box' | 'crow' | 'diamond' | 'dot' | 'inv' | 'none' | 'tee' | 'vee'
         weight    = number (the larger the number the closer the nodes will be)
@@ -93,7 +96,7 @@ Valid attributes
     - valid U{graphviz colors<http://www.research.att.com/~erg/graphviz/info/colors.html>}
 
     - for more details on how to control the graph drawing process see the
-    U{graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>}.
+      U{graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>}.
 
 '''
 import os

@@ -1,0 +1,2 @@
+.. automodule:: altgraph.ObjectGraph
+   :members:

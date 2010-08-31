@@ -1,12 +1,14 @@
 """
 Base Graph class
+================
+
+xxx
 
 #--Version 2.1
 #--Bob Ippolito October, 2004
 
 #--Version 2.0
 #--Istvan Albert June, 2004
-
 
 #--Version 1.0
 #--Nathan Denny, May 27, 1999

@@ -1,0 +1,10 @@
+doc/_build
+build
+dist
+altgraph.egg-info
+.DS_Store
+__pycache__
+
+syntax: glob
+*.dSYM
+*.pyc

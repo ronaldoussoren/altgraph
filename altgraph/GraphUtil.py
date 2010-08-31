@@ -1,5 +1,6 @@
 '''
 Utility classes and functions
+=============================
 '''
 
 from altgraph.compat import *

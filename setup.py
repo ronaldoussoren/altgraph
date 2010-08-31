@@ -70,7 +70,7 @@ setup(
     license="MIT License",
     packages=['altgraph'],
     platforms=['any'],
-    test_suite='testsuite',
+    test_suite='altgraph_tests',
     zip_safe=True,
     **extra_args
 )

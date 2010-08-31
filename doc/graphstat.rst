@@ -1,0 +1,2 @@
+.. automodule:: altgraph.GraphStat
+   :members:

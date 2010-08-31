@@ -1,5 +1,4 @@
 '''
-
 altgraph - a python graph library
 =================================
 
