@@ -1,6 +1,6 @@
 '''
-Graph algorithms
-================
+altgraph.GraphAlgo - Graph algorithms
+=====================================
 '''
 from altgraph import GraphError
 
@@ -8,11 +8,9 @@ def dijkstra(graph, start, end=None):
     """
     Dijkstra's algorithm for shortest paths
 
-    David Eppstein, UC Irvine, 4 April 2002
+    `David Eppstein, UC Irvine, 4 April 2002 <http://www.ics.uci.edu/~eppstein/161/python/>`_
 
-    U{http://www.ics.uci.edu/~eppstein/161/python/}
-
-    U{http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466}
+    `Python Cookbook Recipe <http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466>`_
 
     Find shortest paths from the  start node to all nodes nearer than or equal to the end node.
 
@@ -21,7 +19,7 @@ def dijkstra(graph, start, end=None):
     vertex is reached), but will correctly compute shortest paths even for some graphs with negative
     edges, and will raise an exception if it discovers that a negative edge has caused it to make a mistake.
 
-    I{Adapted to altgraph by Istvan Albert, Pennsylvania State University - June, 9 2004}
+    *Adapted to altgraph by Istvan Albert, Pennsylvania State University - June, 9 2004*
 
     """
     D = {}    # dictionary of final distances
@@ -51,7 +49,7 @@ def shortest_path(graph, start, end):
     The input has the same conventions as dijkstra(). The output is a list of the nodes
     in order along the shortest path.
 
-    B{Note that the distances must be stored in the edge data as numeric data}
+    **Note that the distances must be stored in the edge data as numeric data**
     """
 
     D,P = dijkstra(graph, start, end)

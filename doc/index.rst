@@ -10,14 +10,13 @@ altgraph is a fork of graphlib: a graph (network) package for constructing
 graphs, BFS and DFS traversals, topological sort, shortest paths, etc. with
 graphviz output.
 
-The primary users of this package are `macholib <http://pypi.python.org/pypi/macholib` and `modulegraph <http://pypi.python.org/pypi/modulegraph`.
-
-Contents:
+The primary users of this package are `macholib <http://pypi.python.org/pypi/macholib>`_ and `modulegraph <http://pypi.python.org/pypi/modulegraph>`_.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    changelog
+   license
    core
    graph
    objectgraph
@@ -25,6 +24,13 @@ Contents:
    graphstat
    graphutil
    dot
+
+Online Resources
+================
+
+* `Sourcecode repository on bitbucket <http://bitbucket.org/ronaldoussoren/altgraph/>`_
+
+* `The issue tracker <http://bitbucket.org/ronaldoussoren/altgraph/issues>`_
 
 Indices and tables
 ==================

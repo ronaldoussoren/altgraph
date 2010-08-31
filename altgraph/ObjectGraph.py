@@ -1,6 +1,6 @@
 """
-Graph of objects with an identifier
-===================================
+altgraph.ObjectGraph - Graph of objects with an identifier
+==========================================================
 
 A graph of objects that have a "graphident" attribute.
 graphident is the key for the object in the graph
@@ -56,8 +56,7 @@ class ObjectGraph(object):
         Filter the ObjectGraph in-place by removing all edges to nodes that
         do not match every filter in the given filter list
 
-        Returns a tuple containing the number of:
-            (nodes_visited, nodes_removed, nodes_orphaned)
+        Returns a tuple containing the number of: (nodes_visited, nodes_removed, nodes_orphaned)
         """
         visited, removes, orphans = filter_stack(self.graph, self, filters)
 

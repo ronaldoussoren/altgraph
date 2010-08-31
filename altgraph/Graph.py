@@ -1,17 +1,16 @@
 """
-Base Graph class
-================
+altgraph.Graph - Base Graph class
+=================================
 
-xxx
+.. 
+  #--Version 2.1
+  #--Bob Ippolito October, 2004
 
-#--Version 2.1
-#--Bob Ippolito October, 2004
+  #--Version 2.0
+  #--Istvan Albert June, 2004
 
-#--Version 2.0
-#--Istvan Albert June, 2004
-
-#--Version 1.0
-#--Nathan Denny, May 27, 1999
+  #--Version 1.0
+  #--Nathan Denny, May 27, 1999
 """
 
 from altgraph import GraphError
@@ -20,18 +19,22 @@ from compat import *
 
 class Graph(object):
     """
-    The Graph class represents a directed graph with C{N} nodes and C{E} edges.
+    The Graph class represents a directed graph with *N* nodes and *E* edges.
 
     Naming conventions:
-        - the prefixes such asC{out}, C{inc} and C{all} will refer to methods
-        that operate on the outgoing, incoming or all edges of that node.
-        For example: L{inc_degree} will refer to the degree of the node
-        computed over the incoming edges (the number of neighbours linking to
-        the node).
-        - the prefixes such as C{forw} and C{back} will refer to the
-        orientation of the edges used in the method with respect to the node.
-        For example: L{forw_bfs} will start at the node then use the outgoing
-        edges to traverse the graph (goes forward).
+
+    - the prefixes such as *out*, *inc* and *all* will refer to methods
+      that operate on the outgoing, incoming or all edges of that node.
+
+      For example: :py:meth:`inc_degree` will refer to the degree of the node
+      computed over the incoming edges (the number of neighbours linking to
+      the node).
+
+    - the prefixes such as *forw* and *back* will refer to the
+      orientation of the edges used in the method with respect to the node.
+
+      For example: :py:meth:`forw_bfs` will start at the node then use the outgoing
+      edges to traverse the graph (goes forward).
     """
 
     def __init__(self, edges=None):
@@ -81,10 +84,11 @@ class Graph(object):
         Adds a directed edge going from head_id to tail_id.
         Arbitrary data can be attached to the edge via edge_data.
         It may create the nodes if adding edges between nonexisting ones.
-        @param head_id: head node
-        @param tail_id: tail node
-        @param edge_data: (optional) data attached to the edge
-        @param create_nodes: (optional) creates the head_id or tail_id node in case they did not exist
+
+        :param head_id: head node
+        :param tail_id: tail node
+        :param edge_data: (optional) data attached to the edge
+        :param create_nodes: (optional) creates the head_id or tail_id node in case they did not exist
         """
         # shorcut
         edge = self.next_edge
@@ -361,6 +365,7 @@ class Graph(object):
     def _topo_sort(self, forward=True):
         """
         Topological sort.
+
         Returns a list of nodes where the successors (based on outgoing and
         incoming edges selected by the forward parameter) of any given node
         appear in the sequence after that node.
@@ -404,6 +409,7 @@ class Graph(object):
     def forw_topo_sort(self):
         """
         Topological sort.
+
         Returns a list of nodes where the successors (based on outgoing edges)
         of any given node appear in the sequence after that node.
         """
@@ -412,6 +418,7 @@ class Graph(object):
     def back_topo_sort(self):
         """
         Reverse topological sort.
+
         Returns a list of nodes where the successors (based on incoming edges)
         of any given node appear in the sequence after that node.
         """
@@ -420,6 +427,7 @@ class Graph(object):
     def _bfs_subgraph(self, start_id, forward=True):
         """
         Private method creates a subgraph in a bfs order.
+
         The forward parameter specifies whether it is a forward or backward
         traversal.
         """
@@ -458,6 +466,7 @@ class Graph(object):
     def iterdfs(self, start, end=None, forward=True):
         """
         Collecting nodes in some depth first traversal.
+
         The forward parameter specifies whether it is a forward or backward
         traversal.
         """
@@ -510,6 +519,7 @@ class Graph(object):
     def _iterbfs(self, start, end=None, forward=True):
         """
         Private method, collecting nodes in some breadth first traversal.
+
         The forward parameter specifies whether it is a forward or backward
         traversal.  Returns a list of tuples where the first value is the hop
         value the second value is the node id.
@@ -539,6 +549,7 @@ class Graph(object):
     def forw_bfs(self, start, end=None):
         """
         Returns a list of nodes in some forward BFS order.
+
         Starting from the start node the breadth first search proceeds along
         outgoing edges.
         """
@@ -547,6 +558,7 @@ class Graph(object):
     def back_bfs(self, start, end=None):
         """
         Returns a list of nodes in some backward BFS order.
+
         Starting from the start node the breadth first search proceeds along
         incoming edges.
         """
@@ -555,6 +567,7 @@ class Graph(object):
     def forw_dfs(self, start, end=None):
         """
         Returns a list of nodes in some forward DFS order.
+
         Starting with the start node the depth first search proceeds along
         outgoing edges.
         """
@@ -563,6 +576,7 @@ class Graph(object):
     def back_dfs(self, start, end=None):
         """
         Returns a list of nodes in some backward DFS order.
+
         Starting from the start node the depth first search proceeds along
         incoming edges.
         """
@@ -570,7 +584,7 @@ class Graph(object):
 
     def connected(self):
         """
-        Returns C{True} if the graph's every node can be reached from every
+        Returns :py:data:`True` if the graph's every node can be reached from every
         other node.
         """
         node_list = self.node_list()
@@ -604,17 +618,19 @@ class Graph(object):
     def get_hops(self, start, end=None, forward=True):
         """
         Computes the hop distance to all nodes centered around a specified node.
+
         First order neighbours are at hop 1, their neigbours are at hop 2 etc.
-        Uses L{forw_bfs} or L{back_bfs} depending on the value of the forward
+        Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value of the forward
         parameter.  If the distance between all neighbouring nodes is 1 the hop
         number corresponds to the shortest distance between the nodes.
 
-        @param start: the starting node
-        @param end: ending node (optional). When not specified will search the whole graph.
-        @param forward: directionality parameter (optional). If C{True} (default) it uses L{forw_bfs} otherwise L{back_bfs}.
-        @return: returns a list of tuples where each tuple contains the node and the hop.
+        :param start: the starting node
+        :param end: ending node (optional). When not specified will search the whole graph.
+        :param forward: directionality parameter (optional). If C{True} (default) it uses L{forw_bfs} otherwise L{back_bfs}.
+        :return: returns a list of tuples where each tuple contains the node and the hop.
 
         Typical usage::
+
             >>> print graph.get_hops(1, 8)
             >>> [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)]
             # node 1 is at 0 hops

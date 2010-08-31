@@ -1,6 +1,6 @@
 '''
-Functions providing various graph statistics
-============================================
+altgraph.GraphStat - Functions providing various graph statistics
+=================================================================
 '''
 import sys
 
@@ -13,13 +13,14 @@ def avg_hops(graph):
 def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
     '''
     Computes the degree distribution for a graph.
+
     Returns a list of tuples where the first element of the tuple is the center of the bin
     representing a range of degrees and the second element of the tuple are the number of nodes
     with the degree falling in the range.
 
     Example::
-        ....
 
+        ....
     '''
 
     deg = []
@@ -38,6 +39,7 @@ def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
 def _binning(values, limits=(0,0), bin_num=10):
     '''
     Bins data that falls between certain limits.
+
     Returns a list of tuples where the first element of the tuple is the center of the bin
     and the second element of the tuple are the counts.
     '''

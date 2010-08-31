@@ -1,16 +1,16 @@
 '''
-Interface to the dot language
-=============================
+altgraph.Dot - Interface to the dot language
+============================================
 
-The B{Dot} module provides a simple interface to the
-file format used in the U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}
+The :py:mod:`~altgraph.Dot` module provides a simple interface to the
+file format used in the `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
 program. The module is intended to offload the most tedious part of the process
-(the B{dot} file generation) while transparently exposing most of its features.
+(the **dot** file generation) while transparently exposing most of its features.
 
-To display the graphs or to generate image files the U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}
-package needs to be installed on the system, moreover the C{dot} and C{dotty} programs must
+To display the graphs or to generate image files the `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
+package needs to be installed on the system, moreover the :command:`dot` and :command:`dotty` programs must
 be accesible in the program path so that they can be ran from processes spawned
-within the module. See the L{Dot} documentation for further information on the setup.
+within the module. 
 
 Example usage
 -------------
@@ -42,6 +42,7 @@ Dot class can use for both directed graph and non-directed graph
 by passing B{graphtype} parameter.
 
 Example::
+
     # create directed graph(default)
     dot = Dot.Dot(graph, graphtype="digraph")
 
@@ -52,11 +53,12 @@ Customizing the output
 ----------------------
 
 The graph drawing process may be customized by passing
-valid B{dot} parameters for the nodes and edges. For a list of all
-parameters see the U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}
+valid :command:`dot` parameters for the nodes and edges. For a list of all
+parameters see the `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
 documentation.
 
 Example::
+
     # customizing the way the overall graph is drawn
     dot.style(size='10,10', rankdir='RL', page='5, 5' , ranksep=0.75)
 
@@ -70,34 +72,35 @@ Example::
     dot.edge_style(4, 5, arrowsize=2, style='bold')
 
 
-B{Observation}: dotty (invoked via L{Dot.display}) may not be able to
-display all graphics styles. To verify the output save it to an image file
-and look at it that way.
+.. note:: 
+  
+   dotty (invoked via :py:func:`~altgraph.Dot.display`) may not be able to
+   display all graphics styles. To verify the output save it to an image file
+   and look at it that way.
 
 Valid attributes
 ----------------
 
-    - dot styles, passed via the L{Dot.style} method::
+    - dot styles, passed via the :py:meth:`Dot.style` method::
 
         rankdir = 'LR'   (draws the graph horizontally, left to right)
         ranksep = number (rank separation in inches)
 
-    - node attributes, passed via the L{Dot.node_style} method::
+    - node attributes, passed via the :py:meth:`Dot.node_style` method::
 
         style = 'filled' | 'invisible' | 'diagonals' | 'rounded'
         shape = 'box' | 'ellipse' | 'circle' | 'point' | 'triangle'
 
-    - edge attributes, passed via the L{Dot.edge_style} method::
+    - edge attributes, passed via the :py:meth:`Dot.edge_style` method::
 
         style     = 'dashed' | 'dotted' | 'solid' | 'invis' | 'bold'
         arrowhead = 'box' | 'crow' | 'diamond' | 'dot' | 'inv' | 'none' | 'tee' | 'vee'
         weight    = number (the larger the number the closer the nodes will be)
 
-    - valid U{graphviz colors<http://www.research.att.com/~erg/graphviz/info/colors.html>}
+    - valid `graphviz colors <http://www.research.att.com/~erg/graphviz/info/colors.html>`_
 
     - for more details on how to control the graph drawing process see the
-      U{graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>}.
-
+      `graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
 '''
 import os
 
@@ -106,14 +109,12 @@ from altgraph.compat import *
 
 class Dot(object):
     '''
-    A  class providing a B{graphviz} (dot language) representation
+    A  class providing a **graphviz** (dot language) representation
     allowing a fine grained control over how the graph is being
     displayed.
 
-    If the C{dot} and C{dotty} programs are not in the current system path
-    their location needs to be specified in the L{constructor<__init__>}.
-
-    For detailed example usage see the L{Dot} module documentation.
+    If the :command:`dot` and :command:`dotty` programs are not in the current system path
+    their location needs to be specified in the contructor.
     '''
 
     def __init__(self, graph=None, nodes=None, edgefn=None, nodevisitor=None, edgevisitor=None, name="G", dot='dot', dotty='dotty', neato='neato', graphtype="digraph"):

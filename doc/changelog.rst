@@ -1,6 +1,17 @@
 Release history
 ===============
 
+0.7.1
+-----
+
+This is a minor feature release
+
+Features:
+
+- Documentation is now generated using `sphinx <http://pypi.python.org/pypi/sphinx>`_
+
+- The repository has moved to bitbucket 
+
 0.7.0
 -----
 

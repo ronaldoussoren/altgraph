@@ -1,6 +1,6 @@
 '''
-Utility classes and functions
-=============================
+altgraph.GraphUtil - Utility classes and functions
+==================================================
 '''
 
 from altgraph.compat import *
@@ -9,8 +9,8 @@ import random
 
 def generate_random_graph(node_num, edge_num, self_loops=False, multi_edges=False):
     '''
-    Generates and returns a L{Graph.Graph} instance with C{node_num} nodes
-    randomly connected by C{edge_num} edges.
+    Generates and returns a :py:class:`~altgraph.Graph.Graph` instance with *node_num* nodes
+    randomly connected by *edge_num* edges.
     '''
     g = Graph.Graph()
     nodes = range(node_num)
@@ -39,9 +39,9 @@ def generate_random_graph(node_num, edge_num, self_loops=False, multi_edges=Fals
 
 def generate_scale_free_graph(steps, growth_num, self_loops=False, multi_edges=False):
     '''
-    Generates and returns a L{Graph.Graph} instance that will have C{steps*growth_num} nodes
-    and a scale free (powerlaw) connectivity. Starting with a fully connected graph with C{growth_num} nodes
-    at every step C{growth_num} nodes are added to the graph and are connected to existing nodes with
+    Generates and returns a :py:class:`~altgraph.Graph.Graph` instance that will have *steps*growth_num* nodes
+    and a scale free (powerlaw) connectivity. Starting with a fully connected graph with *growth_num* nodes
+    at every step *growth_num* nodes are added to the graph and are connected to existing nodes with
     a probability proportional to the degree of these existing nodes.
     '''
     graph = Graph.Graph()

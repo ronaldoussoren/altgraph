@@ -2,27 +2,34 @@
 altgraph - a python graph library
 =================================
 
-altgraph is a fork of graphlib U{http://pygraphlib.sourceforge.net} tailored
+altgraph is a fork of `graphlib <http://pygraphlib.sourceforge.net>`_ tailored
 to use newer Python 2.3+ features, including additional support used by the
 py2app suite (modulegraph and macholib, specifically).
 
 altgraph is a python based graph (network) representation and manipulation package.
-It has started out as an extension to the C{graph_lib} module written by Nathan Denny
-U{http://www.ece.arizona.edu/~denny/python_nest/graph_lib_1.0.1.html} but over time
-it has been significantly optimized and expanded.
+It has started out as an extension to the `graph_lib module <http://www.ece.arizona.edu/~denny/python_nest/graph_lib_1.0.1.html>`_
+written by Nathan Denny it has been significantly optimized and expanded.
 
-The L{Graph} class is loosely modeled after the U{LEDA<http://www.algorithmic-solutions.com/enleda.htm>} (Library of Efficient Datatypes)  representation. The library
+The :class:`altgraph.Graph.Graph` class is loosely modeled after the `LEDA <http://www.algorithmic-solutions.com/enleda.htm>`_ 
+(Library of Efficient Datatypes)  representation. The library
 includes methods for constructing graphs, BFS and DFS traversals,
 topological sort, finding connected components, shortest paths as well as a number
 graph statistics functions. The library can also visualize graphs
-via U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}.
+via `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_.
 
 The package contains the following modules:
-    -  the L{Graph} module contains the L{Graph.Graph} class that stores the graph data
-    -  the L{GraphAlgo} implements graph algorithms operating on graphs (L{Graph.Graph} instances)
-    -  the L{GraphStat} contains functions for computing statistical measures on graphs
-    -  the L{GraphUtil} contains functions for generating, reading and saving graphs
-    -  the L{Dot}  contains functions for displaying graphs via U{graphviz<http://www.research.att.com/sw/tools/graphviz/>}.
+
+    -  the :py:mod:`altgraph.Graph` module contains the :class:`~altgraph.Graph.Graph` class that stores the graph data
+
+    -  the :py:mod:`altgraph.GraphAlgo` module implements graph algorithms operating on graphs (:py:class:`~altgraph.Graph.Graph`} instances)
+
+    -  the :py:mod:`altgraph.GraphStat` module contains functions for computing statistical measures on graphs
+
+    -  the :py:mod:`altgraph.GraphUtil` module contains functions for generating, reading and saving graphs
+
+    -  the :py:mod:`altgraph.Dot` module  contains functions for displaying graphs via `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
+
+    -  the :py:mod:`altgraph.ObjectGraph` module implements a graph of objects with a unique identifier
 
 Installation
 ------------
@@ -50,8 +57,8 @@ Our script then might look the following way::
 
     # these are the edges
     edges = [ (1,2), (2,4), (1,3), (2,4), (3,4), (4,5), (6,5),
-    (6,14), (14,15), (6, 15),  (5,7), (7, 8), (7,13), (12,8),
-    (8,13), (11,12), (11,9), (13,11), (9,13), (13,10) ]
+        (6,14), (14,15), (6, 15),  (5,7), (7, 8), (7,13), (12,8),
+        (8,13), (11,12), (11,9), (13,11), (9,13), (13,10) ]
 
     # creates the graph
     graph = Graph.Graph()
@@ -95,28 +102,30 @@ To display the graph we can use the GraphViz backend::
     dot.save_img(file_name='graph', file_type='gif')
 
 
-@author: U{Istvan Albert<http://www.personal.psu.edu/staff/i/u/iua1/>}
 
-@license:  MIT License
+..
+  @author: U{Istvan Albert<http://www.personal.psu.edu/staff/i/u/iua1/>}
 
-Copyright (c) 2004 Istvan Albert unless otherwise noted.
+  @license:  MIT License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-and associated documentation files (the "Software"), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do
-so.
+  Copyright (c) 2004 Istvan Albert unless otherwise noted.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-@requires: Python 2.3 or higher
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+  and associated documentation files (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+  and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do
+  so.
 
-@newfield contributor: Contributors:
-@contributor: U{Reka Albert <http://www.phys.psu.edu/~ralbert/>}
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+  FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
+  @requires: Python 2.3 or higher
+
+  @newfield contributor: Contributors:
+  @contributor: U{Reka Albert <http://www.phys.psu.edu/~ralbert/>}
 
 '''
 
