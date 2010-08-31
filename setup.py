@@ -103,7 +103,7 @@ class upload_docs (PyPIRCCommand):
                 fullname = os.path.join(toplevel, fn)
                 relname = os.path.relpath(fullname, 'doc/_build/html')
 
-                print "%s -> %s"%(fullname, relname)
+                print ("%s -> %s"%(fullname, relname))
 
                 zf.write(fullname, relname)
 
@@ -158,7 +158,7 @@ class upload_docs (PyPIRCCommand):
         elif schema == 'https':
             http = httplib.HTTPSConnection(netloc)
         else:
-            raise AssertionError, "unsupported schema "+schema
+            raise AssertionError("unsupported schema "+schema)
 
         data = ''
         loglevel = log.INFO
@@ -171,7 +171,8 @@ class upload_docs (PyPIRCCommand):
             http.putheader('Authorization', auth)
             http.endheaders()
             http.send(body)
-        except socket.error, e:
+        except socket.error:
+            e = socket.exc_info()[1]
             self.announce(str(e), log.ERROR)
             return
 
