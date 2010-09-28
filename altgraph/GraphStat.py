@@ -4,12 +4,6 @@ altgraph.GraphStat - Functions providing various graph statistics
 '''
 import sys
 
-def avg_hops(graph):
-    '''
-
-    '''
-    pass
-
 def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
     '''
     Computes the degree distribution for a graph.
@@ -38,7 +32,8 @@ def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
 
 def _binning(values, limits=(0,0), bin_num=10):
     '''
-    Bins data that falls between certain limits.
+    Bins data that falls between certain limits, if the limits are (0, 0) the
+    minimum and maximum values are used.
 
     Returns a list of tuples where the first element of the tuple is the center of the bin
     and the second element of the tuple are the counts.
@@ -62,7 +57,7 @@ def _binning(values, limits=(0,0), bin_num=10):
             else:
                 index = int((value - min_val)/float(bin_size))
                 bins[index] += 1
-        except:
+        except IndexError:
             out_points += 1
 
     # make it ready for an x,y plot
@@ -73,9 +68,3 @@ def _binning(values, limits=(0,0), bin_num=10):
         result.append( (x,y) )
 
     return result
-
-
-if __name__ == '__main__':
-    a = range(100)
-    out = _binning(a, limits = (0, 0) )
-    print out

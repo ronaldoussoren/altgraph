@@ -9,8 +9,16 @@ This is a minor feature release
 Features:
 
 - Documentation is now generated using `sphinx <http://pypi.python.org/pypi/sphinx>`_
+  and can be viewed at <http://packages.python.org/altgraph>.
 
 - The repository has moved to bitbucket 
+
+- ``altgraph.GraphStat.avg_hops`` is no longer present, the function had no
+  implementation and no specified behaviour.
+
+- the module ``altgraph.compat`` is gone, which means altgraph will no
+  longer work with Python 2.3.
+
 
 0.7.0
 -----

@@ -103,9 +103,10 @@ Valid attributes
       `graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
 '''
 import os
+from itertools import imap
 
 from altgraph import GraphError
-from altgraph.compat import *
+
 
 class Dot(object):
     '''

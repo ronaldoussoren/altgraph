@@ -3,9 +3,9 @@ altgraph.GraphUtil - Utility classes and functions
 ==================================================
 '''
 
-from altgraph.compat import *
-from altgraph import Graph
 import random
+from collections import deque
+from altgraph import Graph
 
 def generate_random_graph(node_num, edge_num, self_loops=False, multi_edges=False):
     '''
@@ -104,20 +104,3 @@ def filter_stack(graph, head, filters):
     orphans = [(last_good, tail) for (last_good, tail) in orphans if tail not in removes]
 
     return visited, removes, orphans
-
-
-
-if __name__ == '__main__':
-
-    import Dot
-
-    g = generate_scale_free_graph(steps=10, growth_num=4)
-
-    d = Dot.Dot(g)
-
-    d.all_node_style(width=1, shape='circle', style='filled', fillcolor='white')
-
-    d.display()
-    d.save_img()
-
-    print g

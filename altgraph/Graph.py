@@ -14,8 +14,7 @@ altgraph.Graph - Base Graph class
 """
 
 from altgraph import GraphError
-
-from compat import *
+from collections import deque
 
 class Graph(object):
     """

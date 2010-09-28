@@ -8,7 +8,6 @@ graphident is the key for the object in the graph
 
 from itertools import imap
 
-from altgraph.compat import *
 from altgraph.Graph import Graph
 from altgraph.GraphUtil import filter_stack
 
