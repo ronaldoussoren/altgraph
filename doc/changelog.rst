@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.7.2
+-----
+
+This is not yet a release...
+
 0.7.1
 -----
 
