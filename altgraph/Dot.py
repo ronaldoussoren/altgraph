@@ -39,7 +39,7 @@ Directed graph and non-directed graph
 -------------------------------------
 
 Dot class can use for both directed graph and non-directed graph
-by passing B{graphtype} parameter.
+by passing ``graphtype`` parameter.
 
 Example::
 
