@@ -1,0 +1,6 @@
+include *.txt MANIFEST.in setup.py
+graft doc
+graft altgraph_tests
+global-exclude .DS_Store
+global-exclude *.pyc
+global-exclude *.so

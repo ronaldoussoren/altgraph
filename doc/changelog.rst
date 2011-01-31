@@ -4,7 +4,11 @@ Release history
 0.7.2
 -----
 
-This is not yet a release...
+This is a minor bugfix release
+
+Bugfixes:
+
+- distutils didn't include the documentation subtree
 
 0.7.1
 -----
