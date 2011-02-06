@@ -24,7 +24,10 @@ def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
         get_deg = graph.out_degree
 
     for node in graph:
-        deg.append( graph.get_degree(node) )
+        deg.append( get_deg(node) )
+
+    if not deg:
+        return []
 
     results = _binning(values=deg, limits=limits, bin_num=bin_num)
 

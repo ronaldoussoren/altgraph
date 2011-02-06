@@ -24,28 +24,28 @@ class BasicTests (unittest.TestCase):
 
     def test_num_edges(self):
         # check the parameters
-        self.assertEquals(self.g.number_of_nodes(), len(self.store))
-        self.assertEquals(self.g.number_of_edges(), len(self.edges))
+        self.assertEqual(self.g.number_of_nodes(), len(self.store))
+        self.assertEqual(self.g.number_of_edges(), len(self.edges))
 
     def test_forw_bfs(self):
         # do a forward bfs
-        self.assertEquals( self.g.forw_bfs(1), 
+        self.assertEqual( self.g.forw_bfs(1), 
                 [1, 2, 3, 4, 5, 7, 8, 13, 11, 10, 12, 9])
 
 
     def test_get_hops(self):
         # diplay the hops and hop numbers between nodes
-        self.assertEquals(self.g.get_hops(1, 8), 
+        self.assertEqual(self.g.get_hops(1, 8), 
                 [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
     def test_shortest_path(self):
-        self.assertEquals(GraphAlgo.shortest_path(self.g, 1, 12), 
+        self.assertEqual(GraphAlgo.shortest_path(self.g, 1, 12), 
                 [1, 2, 4, 5, 7, 13, 11, 12])
 
 class TestCompat (unittest.TestCase):
     def test_itertools(self):
-        self.assertEquals(list(altgraph.compat.ireversed([1,2,3])), [3,2,1])
-        self.assertEquals("".join(altgraph.compat.ireversed("asd")), "dsa")
+        self.assertEqual(list(altgraph.compat.ireversed([1,2,3])), [3,2,1])
+        self.assertEqual("".join(altgraph.compat.ireversed("asd")), "dsa")
 
 
 if __name__ == "__main__":

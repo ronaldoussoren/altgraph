@@ -68,6 +68,8 @@ class Graph(object):
         Creates a new node with a node.  Arbitrary data can be attached to the
         node via the node_data parameter.  Adding the same node twice will be
         silently ignored.
+
+        The node must be a hashable value.
         """
         #
         # the nodes will contain tuples that will store incoming edges,
@@ -595,8 +597,10 @@ class Graph(object):
 
     def clust_coef(self, node):
         """
-        Computes and returns the clustering coefficient of node. The clustering
-        coeffcient is defined as ...
+        Computes and returns the local clustering coefficient of node. 
+
+        See <http://en.wikipedia.org/wiki/Clustering_coefficient#Local_clustering_coefficient>
+        for a definition.
         """
         num = 0
         nbr_set = set(self.out_nbrs(node))

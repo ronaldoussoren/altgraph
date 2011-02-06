@@ -16,7 +16,7 @@ from distutils import log
 
 import sys
 
-VERSION = '0.7.2'
+VERSION = '0.7.3'
 DESCRIPTION = "Python graph (network) package"
 LONG_DESCRIPTION = """
 altgraph is a fork of graphlib: a graph (network) package for constructing

@@ -1,6 +1,15 @@
 Release history
 ===============
 
+0.7.3
+-----
+
+This is a minor bugfix release
+
+Bugfixes:
+
+- ``altgraph.GraphStat.degree_dist`` now actually works
+
 0.7.2
 -----
 
