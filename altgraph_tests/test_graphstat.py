@@ -66,5 +66,5 @@ class TestBinning (unittest.TestCase):
 
         self.assertEqual(result, out)
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     unittest.main()

@@ -4,7 +4,7 @@ Release history
 0.7.3
 -----
 
-This is a minor bugfix release
+This is a bugfix release
 
 Bugfixes:
 
@@ -13,6 +13,28 @@ Bugfixes:
 - ``altgraph.Graph.add_edge(a, b, create_nodes=False)`` will
   no longer create the edge when one of the nodes doesn't
   exist.
+
+- ``altgraph.Graph.forw_topo_sort`` failed for some sparse graphs.
+
+- ``altgraph.Graph.back_topo_sort`` was completely broken in 
+  previous releases.
+
+- ``altgraph.Graph.forw_bfs_subgraph`` now actually works.
+
+- ``altgraph.Graph.back_bfs_subgraph`` now actually works.
+
+- ``altgraph.Graph.iterdfs`` now returns the correct result
+  when the ``forward`` argument is ``False``.
+
+- ``altgraph.Graph.iterdata`` now returns the correct result
+  when the ``forward`` argument is ``False``.
+
+Features:
+
+- The ``altgraph.Graph`` constructor now accepts an argument
+  that contains 2- and 3-tuples instead of requireing that
+  all items have the same size. The (optional) argument can now 
+  also be any iterator.
 
 0.7.2
 -----

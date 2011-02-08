@@ -4,6 +4,8 @@ dist
 altgraph.egg-info
 .DS_Store
 __pycache__
+.coverage
+htmlcov
 
 syntax: glob
 *.dSYM

@@ -162,22 +162,289 @@ class TestGraph (unittest.TestCase):
 
 
 
-    @unittest.expectedFailure
     def test_toposort(self):
         graph = Graph()
-        self.fail("add tests for forw_topo_sort and back_topo_sort")
+        graph.add_node(1)
+        graph.add_node(2)
+        graph.add_node(3)
+        graph.add_node(4)
+        graph.add_node(5)
 
-    @unittest.expectedFailure
+        graph.add_edge(1, 2)
+        graph.add_edge(1, 3)
+        graph.add_edge(2, 4)
+        graph.add_edge(3, 5)
+
+        ok, result = graph.forw_topo_sort()
+        self.assertTrue(ok)
+        for idx in range(1, 6):
+            self.assertTrue(idx in result)
+
+        self.assertTrue(result.index(1) < result.index(2))
+        self.assertTrue(result.index(1) < result.index(3))
+        self.assertTrue(result.index(2) < result.index(4))
+        self.assertTrue(result.index(3) < result.index(5))
+
+        ok, result = graph.back_topo_sort()
+        self.assertTrue(ok)
+        for idx in range(1, 6):
+            self.assertTrue(idx in result)
+        self.assertTrue(result.index(2) < result.index(1))
+        self.assertTrue(result.index(3) < result.index(1))
+        self.assertTrue(result.index(4) < result.index(2))
+        self.assertTrue(result.index(5) < result.index(3))
+
+
+        # Same graph as before, but with edges
+        # reversed, which means we should get
+        # the same results as before if using
+        # back_topo_sort rather than forw_topo_sort
+        # (and v.v.)
+
+        graph = Graph()
+        graph.add_node(1)
+        graph.add_node(2)
+        graph.add_node(3)
+        graph.add_node(4)
+        graph.add_node(5)
+
+        graph.add_edge(2, 1)
+        graph.add_edge(3, 1)
+        graph.add_edge(4, 2)
+        graph.add_edge(5, 3)
+
+        ok, result = graph.back_topo_sort()
+        self.assertTrue(ok)
+        for idx in range(1, 6):
+            self.assertTrue(idx in result)
+
+        self.assertTrue(result.index(1) < result.index(2))
+        self.assertTrue(result.index(1) < result.index(3))
+        self.assertTrue(result.index(2) < result.index(4))
+        self.assertTrue(result.index(3) < result.index(5))
+
+        ok, result = graph.forw_topo_sort()
+        self.assertTrue(ok)
+        for idx in range(1, 6):
+            self.assertTrue(idx in result)
+        self.assertTrue(result.index(2) < result.index(1))
+        self.assertTrue(result.index(3) < result.index(1))
+        self.assertTrue(result.index(4) < result.index(2))
+        self.assertTrue(result.index(5) < result.index(3))
+
+
+        # Create a cycle
+        graph.add_edge(1, 5)
+        ok, result = graph.forw_topo_sort()
+        self.assertFalse(ok)
+        ok, result = graph.back_topo_sort()
+        self.assertFalse(ok)
+
     def test_bfs_subgraph(self):
-        self.fail("add tests for forw_bfs_subgraph and back_bfs_subgraph")
+        graph = Graph()
+        graph.add_edge(1, 2)
+        graph.add_edge(1, 4)
+        graph.add_edge(2, 4)
+        graph.add_edge(4, 8)
+        graph.add_edge(4, 9)
+        graph.add_edge(4, 10)
+        graph.add_edge(8, 10)
 
-    @unittest.expectedFailure
+        subgraph = graph.forw_bfs_subgraph(10)
+        self.assertTrue(isinstance(subgraph, Graph))
+        self.assertEqual(subgraph.number_of_nodes(), 1)
+        self.assertTrue(10 in subgraph)
+        self.assertEqual(subgraph.number_of_edges(), 0)
+
+        subgraph = graph.forw_bfs_subgraph(4)
+        self.assertTrue(isinstance(subgraph, Graph))
+        self.assertEqual(subgraph.number_of_nodes(), 4)
+        self.assertTrue(4 in subgraph)
+        self.assertTrue(8 in subgraph)
+        self.assertTrue(9 in subgraph)
+        self.assertTrue(10 in subgraph)
+        self.assertEqual(subgraph.number_of_edges(), 4)
+        e = subgraph.edge_by_node(4, 8)
+        e = subgraph.edge_by_node(4, 9)
+        e = subgraph.edge_by_node(4, 10)
+        e = subgraph.edge_by_node(8, 10)
+
+        # same graph as before, but switch around
+        # edges. This results in the same test results
+        # but now for back_bfs_subgraph rather than
+        # forw_bfs_subgraph
+
+        graph = Graph()
+        graph.add_edge(2, 1)
+        graph.add_edge(4, 1)
+        graph.add_edge(4, 2)
+        graph.add_edge(8, 4)
+        graph.add_edge(9, 4)
+        graph.add_edge(10, 4)
+        graph.add_edge(10, 8)
+
+        subgraph = graph.back_bfs_subgraph(10)
+        self.assertTrue(isinstance(subgraph, Graph))
+        self.assertEqual(subgraph.number_of_nodes(), 1)
+        self.assertTrue(10 in subgraph)
+        self.assertEqual(subgraph.number_of_edges(), 0)
+
+        subgraph = graph.back_bfs_subgraph(4)
+        self.assertTrue(isinstance(subgraph, Graph))
+        self.assertEqual(subgraph.number_of_nodes(), 4)
+        self.assertTrue(4 in subgraph)
+        self.assertTrue(8 in subgraph)
+        self.assertTrue(9 in subgraph)
+        self.assertTrue(10 in subgraph)
+        self.assertEqual(subgraph.number_of_edges(), 4)
+        e = subgraph.edge_by_node(4, 8)
+        e = subgraph.edge_by_node(4, 9)
+        e = subgraph.edge_by_node(4, 10)
+        e = subgraph.edge_by_node(8, 10)
+
     def test_iterdfs(self):
-        self.fail("add tests for iterdfs")
+        graph = Graph()
+        graph.add_edge("1", "1.1")
+        graph.add_edge("1", "1.2")
+        graph.add_edge("1", "1.3")
+        graph.add_edge("1.1", "1.1.1")
+        graph.add_edge("1.1", "1.1.2")
+        graph.add_edge("1.2", "1.2.1")
+        graph.add_edge("1.2", "1.2.2")
+        graph.add_edge("1.2.2", "1.2.2.1")
+        graph.add_edge("1.2.2", "1.2.2.2")
+        graph.add_edge("1.2.2", "1.2.2.3")
 
-    @unittest.expectedFailure
+        result = list(graph.iterdfs("1"))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+        result = list(graph.iterdfs("1", "1.2.1"))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1'
+        ])
+
+        graph = Graph()
+        graph.add_edge("1.1", "1")
+        graph.add_edge("1.2", "1")
+        graph.add_edge("1.3", "1")
+        graph.add_edge("1.1.1", "1.1")
+        graph.add_edge("1.1.2", "1.1")
+        graph.add_edge("1.2.1", "1.2")
+        graph.add_edge("1.2.2", "1.2")
+        graph.add_edge("1.2.2.1", "1.2.2")
+        graph.add_edge("1.2.2.2", "1.2.2")
+        graph.add_edge("1.2.2.3", "1.2.2")
+
+        result = list(graph.iterdfs("1", forward=False))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+        result = list(graph.iterdfs("1", "1.2.1", forward=False))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1'
+        ])
+
+        
+        # Introduce cyle:
+        graph.add_edge("1", "1.2")
+        result = list(graph.iterdfs("1", forward=False))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+
+
     def test_iterdata(self):
-        self.fail("add tests for iterdata")
+        graph = Graph()
+        graph.add_node("1", "I")
+        graph.add_node("1.1", "I.I")
+        graph.add_node("1.2", "I.II")
+        graph.add_node("1.3", "I.III")
+        graph.add_node("1.1.1", "I.I.I")
+        graph.add_node("1.1.2", "I.I.II")
+        graph.add_node("1.2.1", "I.II.I")
+        graph.add_node("1.2.2", "I.II.II")
+        graph.add_node("1.2.2.1", "I.II.II.I")
+        graph.add_node("1.2.2.2", "I.II.II.II")
+        graph.add_node("1.2.2.3", "I.II.II.III")
+
+        graph.add_edge("1", "1.1")
+        graph.add_edge("1", "1.2")
+        graph.add_edge("1", "1.3")
+        graph.add_edge("1.1", "1.1.1")
+        graph.add_edge("1.1", "1.1.2")
+        graph.add_edge("1.2", "1.2.1")
+        graph.add_edge("1.2", "1.2.2")
+        graph.add_edge("1.2.2", "1.2.2.1")
+        graph.add_edge("1.2.2", "1.2.2.2")
+        graph.add_edge("1.2.2", "1.2.2.3")
+
+        result = list(graph.iterdata("1", forward=True))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 'I.II.II', 'I.II.II.III', 'I.II.II.II', 
+            'I.II.II.I', 'I.II.I', 'I.I', 'I.I.II', 'I.I.I'
+        ])
+
+        result = list(graph.iterdata("1", end="1.2.1", forward=True))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 'I.II.II', 'I.II.II.III', 'I.II.II.II', 
+            'I.II.II.I', 'I.II.I'
+        ])
+
+        result = list(graph.iterdata("1", condition=lambda n: len(n) < 6, forward=True))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 
+            'I.I', 'I.I.I'
+        ])
+
+
+        # And the revese option:
+        graph = Graph()
+        graph.add_node("1", "I")
+        graph.add_node("1.1", "I.I")
+        graph.add_node("1.2", "I.II")
+        graph.add_node("1.3", "I.III")
+        graph.add_node("1.1.1", "I.I.I")
+        graph.add_node("1.1.2", "I.I.II")
+        graph.add_node("1.2.1", "I.II.I")
+        graph.add_node("1.2.2", "I.II.II")
+        graph.add_node("1.2.2.1", "I.II.II.I")
+        graph.add_node("1.2.2.2", "I.II.II.II")
+        graph.add_node("1.2.2.3", "I.II.II.III")
+
+        graph.add_edge("1.1", "1")
+        graph.add_edge("1.2", "1")
+        graph.add_edge("1.3", "1")
+        graph.add_edge("1.1.1", "1.1")
+        graph.add_edge("1.1.2", "1.1")
+        graph.add_edge("1.2.1", "1.2")
+        graph.add_edge("1.2.2", "1.2")
+        graph.add_edge("1.2.2.1", "1.2.2")
+        graph.add_edge("1.2.2.2", "1.2.2")
+        graph.add_edge("1.2.2.3", "1.2.2")
+
+        result = list(graph.iterdata("1", forward=False))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 'I.II.II', 'I.II.II.III', 'I.II.II.II', 
+            'I.II.II.I', 'I.II.I', 'I.I', 'I.I.II', 'I.I.I'
+        ])
+
+        result = list(graph.iterdata("1", end="1.2.1", forward=False))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 'I.II.II', 'I.II.II.III', 'I.II.II.II', 
+            'I.II.II.I', 'I.II.I'
+        ])
+
+        result = list(graph.iterdata("1", condition=lambda n: len(n) < 6, forward=False))
+        self.assertEqual(result, [
+            'I', 'I.III', 'I.II', 
+            'I.I', 'I.I.I'
+        ])
 
     @unittest.expectedFailure
     def test_bfs(self):
@@ -213,10 +480,27 @@ class TestGraph (unittest.TestCase):
         self.fail("add tests for get_hops")
 
 
-    @unittest.expectedFailure
     def test_constructor(self):
-        self.fail("add test for Graph()")
+        graph = Graph(iter([
+                (1, 2),
+                (2, 3, 'a'),
+                (1, 3),
+                (3, 4),
+            ]))
+        self.assertEqual(graph.number_of_nodes(), 4)
+        self.assertEqual(graph.number_of_edges(), 4)
+        try:
+            graph.edge_by_node(1,2)
+            graph.edge_by_node(2,3)
+            graph.edge_by_node(1,3)
+            graph.edge_by_node(3,4)
+        except GraphError:
+            self.fail("Incorrect graph")
+
+        self.assertEquals(graph.edge_data(graph.edge_by_node(2, 3)), 'a')
+
+        self.assertRaises(GraphError, Graph, [(1,2,3,4)])
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     unittest.main()

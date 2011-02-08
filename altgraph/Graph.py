@@ -45,19 +45,17 @@ class Graph(object):
         self.nodes, self.edges = {}, {}
         self.hidden_edges, self.hidden_nodes = {}, {}
 
-        try:
-            # instantiate graph from iterable data
-            if edges:
-                cols = len(edges[0])
-                if cols == 2:
-                    for head, tail in edges:
-                        self.add_edge(head, tail)
-                elif cols == 3:
-                    for head, tail, data in edges:
-                        self.add_edge(head, tail, data)
-        except Exception, exc:
-            raise GraphError('%s -> Cannot create graph from edges=%s' %
-                (exc, edges))
+        if edges is not None:
+            for item in edges:
+                if len(item) == 2:
+                    head, tail = item
+                    self.add_edge(head, tail)
+                elif len(item) == 3:
+                    head, tail, data = item
+                    self.add_edge(head, tail, data)
+                else:
+                    raise GraphError("Cannot create edge from %s"%(item,))
+
 
     def __repr__(self):
         return '<Graph: %d nodes, %d edges>' % (
@@ -385,9 +383,11 @@ class Graph(object):
         if forward:
             get_edges = self.out_edges
             get_degree = self.inc_degree
+            get_next = self.tail
         else:
             get_edges = self.inc_edges
             get_degree = self.out_degree
+            get_next = self.head
 
         for node in self.node_list():
             degree = get_degree(node)
@@ -400,10 +400,11 @@ class Graph(object):
             curr_node = queue.popleft()
             topo_list.append(curr_node)
             for edge in get_edges(curr_node):
-                tail_id = self.tail(edge)
-                indeg[tail_id] -= 1
-                if indeg[tail_id] == 0:
-                    queue.append(tail_id)
+                tail_id = get_next(edge)
+                if tail_id in indeg:
+                    indeg[tail_id] -= 1
+                    if indeg[tail_id] == 0:
+                        queue.append(tail_id)
 
         if len(topo_list) == len(self.node_list()):
             valid = True
@@ -447,10 +448,10 @@ class Graph(object):
 
         g = Graph()
         bfs_list = get_bfs(start_id)
-        for (hop_num, node) in bfs_list:
+        for node in bfs_list:
             g.add_node(node)
 
-        for (hop_num, node) in bfs_list:
+        for node in bfs_list:
             for nbr_id in get_nbrs(node):
                 g.add_edge(node, nbr_id)
 
@@ -468,7 +469,7 @@ class Graph(object):
         Creates and returns a subgraph consisting of the breadth first
         reachable nodes based on the incoming edges.
         """
-        return self._bfs_subgraph(start_id, forward=True)
+        return self._bfs_subgraph(start_id, forward=False)
 
     def iterdfs(self, start, end=None, forward=True):
         """
@@ -481,27 +482,37 @@ class Graph(object):
 
         if forward:
             get_edges = self.out_edges
+            get_next = self.tail
         else:
             get_edges = self.inc_edges
+            get_next = self.head
 
         while stack:
             curr_node = stack.pop()
             yield curr_node
             if curr_node == end:
                 break
-            for edge in get_edges(curr_node):
-                tail = self.tail(edge)
+            for edge in sorted(get_edges(curr_node)):
+                tail = get_next(edge)
                 if tail not in visited:
                     visited.add(tail)
                     stack.append(tail)
 
     def iterdata(self, start, end=None, forward=True, condition=None):
+        """
+        Perform a depth-first walk of the graph (as ``iterdfs``)
+        and yield the item data of every node where condition matches. The 
+        condition callback is only called when node_data is not None.
+        """
+
         visited, stack = set([start]), deque([start])
 
         if forward:
             get_edges = self.out_edges
+            get_next = self.tail
         else:
             get_edges = self.inc_edges
+            get_next = self.head
 
         get_data = self.node_data
 
@@ -515,7 +526,7 @@ class Graph(object):
             if curr_node == end:
                 break
             for edge in get_edges(curr_node):
-                tail = self.tail(edge)
+                tail = get_next(edge)
                 if tail not in visited:
                     visited.add(tail)
                     stack.append(tail)
@@ -536,8 +547,10 @@ class Graph(object):
         # the direction of the bfs depends on the edges that are sampled
         if forward:
             get_edges = self.out_edges
+            get_next = self.tail
         else:
             get_edges = self.inc_edges
+            get_next = self.head
 
         while queue:
             curr_node, curr_step = queue.popleft()
@@ -545,7 +558,7 @@ class Graph(object):
             if curr_node == end:
                 break
             for edge in get_edges(curr_node):
-                tail = self.tail(edge)
+                tail = get_next(edge)
                 if tail not in visited:
                     visited.add(tail)
                     queue.append((tail, curr_step + 1))

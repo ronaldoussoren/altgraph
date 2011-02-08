@@ -8,5 +8,5 @@ class TestDot (unittest.TestCase):
     def test_missing(self):
         self.fail("add tests for altgraph.Dot")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     unittest.main()

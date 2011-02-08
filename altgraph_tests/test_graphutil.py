@@ -16,5 +16,5 @@ class TestGraphUtil (unittest.TestCase):
     def test_filter_stack(self):
         self.fail("missing tests for GraphUtil.filter_stack")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     unittest.main()

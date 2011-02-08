@@ -48,5 +48,5 @@ class TestCompat (unittest.TestCase):
         self.assertEqual("".join(altgraph.compat.ireversed("asd")), "dsa")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
