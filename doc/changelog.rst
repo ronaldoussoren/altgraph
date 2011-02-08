@@ -10,6 +10,10 @@ Bugfixes:
 
 - ``altgraph.GraphStat.degree_dist`` now actually works
 
+- ``altgraph.Graph.add_edge(a, b, create_nodes=False)`` will
+  no longer create the edge when one of the nodes doesn't
+  exist.
+
 0.7.2
 -----
 

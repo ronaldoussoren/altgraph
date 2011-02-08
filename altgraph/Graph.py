@@ -99,9 +99,6 @@ class Graph(object):
             self.add_node(head_id)
             self.add_node(tail_id)
 
-        # store edge information
-        self.edges[edge] = (head_id, tail_id, edge_data)
-
         # update the corresponding incoming and outgoing lists in the nodes
         # index 0 -> incoming edges
         # index 1 -> outgoing edges
@@ -111,6 +108,10 @@ class Graph(object):
             self.nodes[head_id][1].append(edge)
         except KeyError:
             raise GraphError('Invalid nodes %s -> %s' % (head_id, tail_id))
+
+        # store edge information
+        self.edges[edge] = (head_id, tail_id, edge_data)
+
 
         self.next_edge += 1
 
@@ -303,19 +304,24 @@ class Graph(object):
         """
         List of nodes connected by outgoing edges
         """
-        return map(self.tail, self.out_edges(node))
+        l = map(self.tail, self.out_edges(node))
+        l.sort()
+        return l
 
     def inc_nbrs(self, node):
         """
         List of nodes connected by incoming edges
         """
-        return map(self.head, self.inc_edges(node))
+        l = map(self.head, self.inc_edges(node))
+        l.sort()
+        return l
 
     def all_nbrs(self, node):
         """
         List of nodes connected by incoming and outgoing edges
         """
-        return self.inc_nbrs(node) + self.out_nbrs(node)
+        l = dict.fromkeys( self.inc_nbrs(node) + self.out_nbrs(node) )
+        return list(sorted(l))
 
     def out_edges(self, node):
         """
