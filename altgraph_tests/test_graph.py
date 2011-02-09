@@ -326,6 +326,17 @@ class TestGraph (unittest.TestCase):
             '1.2.2.1', '1.2.1'
         ])
 
+        result = graph.forw_dfs("1")
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+        result = graph.forw_dfs("1", "1.2.1")
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1'
+        ])
+
         graph = Graph()
         graph.add_edge("1.1", "1")
         graph.add_edge("1.2", "1")
@@ -348,11 +359,27 @@ class TestGraph (unittest.TestCase):
             '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
             '1.2.2.1', '1.2.1'
         ])
+        result = graph.back_dfs("1")
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+        result = graph.back_dfs("1", "1.2.1")
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1'
+        ])
 
         
         # Introduce cyle:
         graph.add_edge("1", "1.2")
         result = list(graph.iterdfs("1", forward=False))
+        self.assertEqual(result, [
+            '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
+            '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
+        ])
+
+        result = graph.back_dfs("1")
         self.assertEqual(result, [
             '1', '1.3', '1.2', '1.2.2', '1.2.2.3', '1.2.2.2', 
             '1.2.2.1', '1.2.1', '1.1', '1.1.2', '1.1.1'
@@ -446,13 +473,46 @@ class TestGraph (unittest.TestCase):
             'I.I', 'I.I.I'
         ])
 
-    @unittest.expectedFailure
     def test_bfs(self):
-        self.fail("add tests for forw_bfs and back_bfs")
+        graph = Graph()
+        graph.add_edge("1", "1.1")
+        graph.add_edge("1.1", "1.1.1")
+        graph.add_edge("1.1", "1.1.2")
+        graph.add_edge("1.1.2", "1.1.2.1")
+        graph.add_edge("1.1.2", "1.1.2.2")
+        graph.add_edge("1", "1.2")
+        graph.add_edge("1", "1.3")
+        graph.add_edge("1.2", "1.2.1")
 
-    @unittest.expectedFailure
-    def test_dfs(self):
-        self.fail("add tests for forw_dfs and back_dfs")
+        self.assertEquals(graph.forw_bfs("1"), 
+                ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
+        self.assertEquals(graph.forw_bfs("1", "1.1.1"), 
+                ['1', '1.1', '1.2', '1.3', '1.1.1'])
+
+
+        # And the "reverse" graph
+        graph = Graph()
+        graph.add_edge("1.1", "1")
+        graph.add_edge("1.1.1", "1.1")
+        graph.add_edge("1.1.2", "1.1")
+        graph.add_edge("1.1.2.1", "1.1.2")
+        graph.add_edge("1.1.2.2", "1.1.2")
+        graph.add_edge("1.2", "1")
+        graph.add_edge("1.3", "1")
+        graph.add_edge("1.2.1", "1.2")
+
+        self.assertEquals(graph.back_bfs("1"), 
+                ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
+        self.assertEquals(graph.back_bfs("1", "1.1.1"), 
+                ['1', '1.1', '1.2', '1.3', '1.1.1'])
+
+
+
+        # check cycle handling
+        graph.add_edge("1", "1.2.1")
+        self.assertEquals(graph.back_bfs("1"), 
+                ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
+
 
     def test_connected(self):
         graph = Graph()
@@ -471,13 +531,77 @@ class TestGraph (unittest.TestCase):
         graph.add_edge(4, 1)
         self.assertTrue(graph.connected())
 
-    @unittest.expectedFailure
     def test_clust_coef(self):
-        self.fail("add tests for clust_coef")
+        g = Graph()
+        g.add_edge(1, 2)
+        g.add_edge(1, 3)
+        g.add_edge(1, 4)
+        self.assertEqual(g.clust_coef(1), 0)
 
-    @unittest.expectedFailure
+        g.add_edge(2, 5)
+        g.add_edge(3, 5)
+        g.add_edge(4, 5)
+        self.assertEqual(g.clust_coef(1), 0)
+
+        g.add_edge(2, 3)
+        self.assertEqual(g.clust_coef(1), 1./6)
+        g.add_edge(2, 4)
+        self.assertEqual(g.clust_coef(1), 2./6)
+        g.add_edge(4, 2)
+        self.assertEqual(g.clust_coef(1), 3./6)
+
+        g.add_edge(2, 3)
+        g.add_edge(2, 4)
+        g.add_edge(3, 4)
+        g.add_edge(3, 2)
+        g.add_edge(4, 2)
+        g.add_edge(4, 3)
+        self.assertEqual(g.clust_coef(1), 1)
+
+
     def test_get_hops(self):
-        self.fail("add tests for get_hops")
+        graph = Graph()
+        graph.add_edge(1, 2)
+        graph.add_edge(1, 3)
+        graph.add_edge(2, 4)
+        graph.add_edge(4, 5)
+        graph.add_edge(5, 7)
+        graph.add_edge(7, 8)
+        
+        self.assertEquals(graph.get_hops(1), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
+
+        self.assertEquals(graph.get_hops(1, 5), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3)])
+
+        graph.add_edge(5, 1)
+        graph.add_edge(7, 1)
+        graph.add_edge(7, 4)
+
+        self.assertEquals(graph.get_hops(1), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
+
+        # And the reverse graph
+        graph = Graph()
+        graph.add_edge(2, 1)
+        graph.add_edge(3, 1)
+        graph.add_edge(4, 2)
+        graph.add_edge(5, 4)
+        graph.add_edge(7, 5)
+        graph.add_edge(8, 7)
+        
+        self.assertEquals(graph.get_hops(1, forward=False), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
+
+        self.assertEquals(graph.get_hops(1, 5, forward=False), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3)])
+
+        graph.add_edge(1, 5)
+        graph.add_edge(1, 7)
+        graph.add_edge(4, 7)
+
+        self.assertEquals(graph.get_hops(1, forward=False), 
+            [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
 
     def test_constructor(self):

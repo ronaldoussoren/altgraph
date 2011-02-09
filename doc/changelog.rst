@@ -29,12 +29,19 @@ Bugfixes:
 - ``altgraph.Graph.iterdata`` now returns the correct result
   when the ``forward`` argument is ``False``.
 
+
 Features:
 
 - The ``altgraph.Graph`` constructor now accepts an argument
   that contains 2- and 3-tuples instead of requireing that
   all items have the same size. The (optional) argument can now 
   also be any iterator.
+
+- The private method ``altgraph.Graph._bfs`` is no longer
+  present.
+
+- The private method ``altgraph.Graph._dfs`` is no longer
+  present.
 
 0.7.2
 -----

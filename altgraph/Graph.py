@@ -531,13 +531,8 @@ class Graph(object):
                     visited.add(tail)
                     stack.append(tail)
 
-    def _dfs(self, start, end=None, forward=True):
-        return list(self.iterdfs(start, end=end, forward=forward))
-
     def _iterbfs(self, start, end=None, forward=True):
         """
-        Private method, collecting nodes in some breadth first traversal.
-
         The forward parameter specifies whether it is a forward or backward
         traversal.  Returns a list of tuples where the first value is the hop
         value the second value is the node id.
@@ -563,8 +558,6 @@ class Graph(object):
                     visited.add(tail)
                     queue.append((tail, curr_step + 1))
 
-    def _bfs(self, start, end=None, forward=True):
-        return list(self._iterbfs(start, end=end, forward=forward))
 
     def forw_bfs(self, start, end=None):
         """
@@ -573,7 +566,7 @@ class Graph(object):
         Starting from the start node the breadth first search proceeds along
         outgoing edges.
         """
-        return [node for node, step in self._bfs(start, end, forward=True)]
+        return [node for node, step in self._iterbfs(start, end, forward=True)]
 
     def back_bfs(self, start, end=None):
         """
@@ -582,7 +575,7 @@ class Graph(object):
         Starting from the start node the breadth first search proceeds along
         incoming edges.
         """
-        return [node for node, step in self._bfs(start, end, forward=False)]
+        return [node for node, step in self._iterbfs(start, end, forward=False)]
 
     def forw_dfs(self, start, end=None):
         """
@@ -591,7 +584,7 @@ class Graph(object):
         Starting with the start node the depth first search proceeds along
         outgoing edges.
         """
-        return self._dfs(start, end, forward=True)
+        return list(self.iterdfs(start, end, forward=True))
 
     def back_dfs(self, start, end=None):
         """
@@ -600,7 +593,7 @@ class Graph(object):
         Starting from the start node the depth first search proceeds along
         incoming edges.
         """
-        return self._dfs(start, end, forward=False)
+        return list(self.iterdfs(start, end, forward=False))
 
     def connected(self):
         """
@@ -616,18 +609,23 @@ class Graph(object):
 
     def clust_coef(self, node):
         """
-        Computes and returns the local clustering coefficient of node. 
+        Computes and returns the local clustering coefficient of node.  The
+        local cluster coefficient is proportion of the actual number of edges between
+        neighbours of node and the maximum number of edges between those neighbours.
 
         See <http://en.wikipedia.org/wiki/Clustering_coefficient#Local_clustering_coefficient>
-        for a definition.
+        for a formal definition.
         """
         num = 0
         nbr_set = set(self.out_nbrs(node))
-        nbr_set.remove(node) # loop defense
+
+        if node in nbr_set:
+            nbr_set.remove(node) # loop defense
 
         for nbr in nbr_set:
             sec_set = set(self.out_nbrs(nbr))
-            sec_set.remove(nbr) # loop defense
+            if nbr in sec_set:
+                sec_set.remove(nbr) # loop defense
             num += len(nbr_set & sec_set)
 
         nbr_num = len(nbr_set)
@@ -661,6 +659,6 @@ class Graph(object):
             # node 8 is at 5 hops
         """
         if forward:
-            return self._bfs(start=start, end=end, forward=True)
+            return list(self._iterbfs(start=start, end=end, forward=True))
         else:
-            return self._bfs(start=start, end=end, forward=False)
+            return list(self._iterbfs(start=start, end=end, forward=False))
