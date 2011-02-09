@@ -104,7 +104,7 @@ class TestGraph (unittest.TestCase):
         self.assertEqual(graph.edge_by_id(e1), (1,2))
         self.assertRaises(GraphError, graph.edge_by_id, (e1+1)*(e2+1)+1)
 
-        self.assertEquals(list(sorted(graph.edge_list())), [e1, e2])
+        self.assertEqual(list(sorted(graph.edge_list())), [e1, e2])
         
         self.assertEqual(graph.describe_edge(e1), (e1, 1, 1, 2))
         self.assertEqual(graph.describe_edge(e2), (e2, 'a', 4, 5))
@@ -127,10 +127,10 @@ class TestGraph (unittest.TestCase):
         graph.add_edge(5, 1)
         self.assertEqual(list(sorted(graph.all_nbrs(5))), [1, 4])
 
-        self.assertEquals(graph.out_degree(1), 3)
-        self.assertEquals(graph.inc_degree(2), 1)
-        self.assertEquals(graph.inc_degree(5), 2)
-        self.assertEquals(graph.all_degree(5), 3)
+        self.assertEqual(graph.out_degree(1), 3)
+        self.assertEqual(graph.inc_degree(2), 1)
+        self.assertEqual(graph.inc_degree(5), 2)
+        self.assertEqual(graph.all_degree(5), 3)
 
         v = graph.out_edges(4)
         self.assertTrue(isinstance(v, list))
@@ -484,9 +484,9 @@ class TestGraph (unittest.TestCase):
         graph.add_edge("1", "1.3")
         graph.add_edge("1.2", "1.2.1")
 
-        self.assertEquals(graph.forw_bfs("1"), 
+        self.assertEqual(graph.forw_bfs("1"), 
                 ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
-        self.assertEquals(graph.forw_bfs("1", "1.1.1"), 
+        self.assertEqual(graph.forw_bfs("1", "1.1.1"), 
                 ['1', '1.1', '1.2', '1.3', '1.1.1'])
 
 
@@ -501,16 +501,16 @@ class TestGraph (unittest.TestCase):
         graph.add_edge("1.3", "1")
         graph.add_edge("1.2.1", "1.2")
 
-        self.assertEquals(graph.back_bfs("1"), 
+        self.assertEqual(graph.back_bfs("1"), 
                 ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
-        self.assertEquals(graph.back_bfs("1", "1.1.1"), 
+        self.assertEqual(graph.back_bfs("1", "1.1.1"), 
                 ['1', '1.1', '1.2', '1.3', '1.1.1'])
 
 
 
         # check cycle handling
         graph.add_edge("1", "1.2.1")
-        self.assertEquals(graph.back_bfs("1"), 
+        self.assertEqual(graph.back_bfs("1"), 
                 ['1', '1.1', '1.2', '1.3', '1.1.1', '1.1.2', '1.2.1', '1.1.2.1', '1.1.2.2'])
 
 
@@ -568,17 +568,17 @@ class TestGraph (unittest.TestCase):
         graph.add_edge(5, 7)
         graph.add_edge(7, 8)
         
-        self.assertEquals(graph.get_hops(1), 
+        self.assertEqual(graph.get_hops(1), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
-        self.assertEquals(graph.get_hops(1, 5), 
+        self.assertEqual(graph.get_hops(1, 5), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3)])
 
         graph.add_edge(5, 1)
         graph.add_edge(7, 1)
         graph.add_edge(7, 4)
 
-        self.assertEquals(graph.get_hops(1), 
+        self.assertEqual(graph.get_hops(1), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
         # And the reverse graph
@@ -590,17 +590,17 @@ class TestGraph (unittest.TestCase):
         graph.add_edge(7, 5)
         graph.add_edge(8, 7)
         
-        self.assertEquals(graph.get_hops(1, forward=False), 
+        self.assertEqual(graph.get_hops(1, forward=False), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
-        self.assertEquals(graph.get_hops(1, 5, forward=False), 
+        self.assertEqual(graph.get_hops(1, 5, forward=False), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3)])
 
         graph.add_edge(1, 5)
         graph.add_edge(1, 7)
         graph.add_edge(4, 7)
 
-        self.assertEquals(graph.get_hops(1, forward=False), 
+        self.assertEqual(graph.get_hops(1, forward=False), 
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)])
 
 
@@ -621,7 +621,7 @@ class TestGraph (unittest.TestCase):
         except GraphError:
             self.fail("Incorrect graph")
 
-        self.assertEquals(graph.edge_data(graph.edge_by_node(2, 3)), 'a')
+        self.assertEqual(graph.edge_data(graph.edge_by_node(2, 3)), 'a')
 
         self.assertRaises(GraphError, Graph, [(1,2,3,4)])
 
