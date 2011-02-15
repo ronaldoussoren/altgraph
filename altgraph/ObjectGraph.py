@@ -8,6 +8,7 @@ graphident is the key for the object in the graph
 
 from itertools import imap
 
+from altgraph import GraphError
 from altgraph.Graph import Graph
 from altgraph.GraphUtil import filter_stack
 
@@ -109,9 +110,10 @@ class ObjectGraph(object):
         if node is self:
             return node
         ident = getattr(node, 'graphident', None)
-        if ident is not None:
-            return ident
         return ident
+
+    def __contains__(self, node):
+        return self.findNode(node) is not None
 
     def findNode(self, node):
         """
@@ -130,7 +132,11 @@ class ObjectGraph(object):
         Add a node to the graph referenced by the root
         """
         self.msg(4, "addNode", node)
-        self.graph.add_node(node.graphident, node)
+
+        try:
+            self.graph.restore_node(node.graphident)
+        except GraphError:
+            self.graph.add_node(node.graphident, node)
 
     def createReference(self, fromnode, tonode, edge_data=None):
         """

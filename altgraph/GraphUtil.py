@@ -27,7 +27,7 @@ def generate_random_graph(node_num, edge_num, self_loops=False, multi_edges=Fals
             continue
 
         # multiple edge defense
-        if g.edge_by_node(head,tail) and not multi_edges:
+        if g.edge_by_node(head,tail) is not None and not multi_edges:
             continue
 
         # add the edge
@@ -77,6 +77,22 @@ def generate_scale_free_graph(steps, growth_num, self_loops=False, multi_edges=F
     return graph
 
 def filter_stack(graph, head, filters):
+    """
+    Perform a walk in a depth-first order starting
+    at *head*.
+
+    Returns (visited, removes, orphans).
+
+    * visited: the set of visited nodes
+    * removes: the list of nodes where the node
+      data does not all *filters*
+    * orphans: tuples of (last_good, node),
+      where node is not in removes, is directly 
+      reachable from a node in *removes* and 
+      *last_good* is the closest upstream node that is not
+      in *removes*.
+    """
+
     visited, removes, orphans = set([head]), set(), set()
     stack = deque([(head, head)])
     get_data = graph.node_data
@@ -102,5 +118,6 @@ def filter_stack(graph, head, filters):
                 stack.append((last_good, tail))
 
     orphans = [(last_good, tail) for (last_good, tail) in orphans if tail not in removes]
+    orphans.sort()
 
     return visited, removes, orphans

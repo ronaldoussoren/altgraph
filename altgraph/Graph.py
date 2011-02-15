@@ -63,7 +63,7 @@ class Graph(object):
 
     def add_node(self, node, node_data=None):
         """
-        Creates a new node with a node.  Arbitrary data can be attached to the
+        Adds a new node to the graph.  Arbitrary data can be attached to the
         node via the node_data parameter.  Adding the same node twice will be
         silently ignored.
 
@@ -75,6 +75,11 @@ class Graph(object):
         #
         # index 0 -> incoming edges
         # index 1 -> outgoing edges
+
+        if node in self.hidden_nodes:
+            # Node is present, but hidden
+            return
+
         if node not in self.nodes:
             self.nodes[node] = ([], [], node_data)
 
@@ -158,9 +163,10 @@ class Graph(object):
         Restores a previously hidden edge back into the graph.
         """
         try:
-            self.edges[edge] = head_id, tail_id, data = self.hidden_edges[edge]
+            head_id, tail_id, data = self.hidden_edges[edge]
             self.nodes[tail_id][0].append(edge)
             self.nodes[head_id][1].append(edge)
+            self.edges[edge] = head_id, tail_id, data
             del self.hidden_edges[edge]
         except KeyError:
             raise GraphError('Invalid edge %s' % edge)
@@ -170,7 +176,10 @@ class Graph(object):
         Restores all hidden edges.
         """
         for edge in self.hidden_edges.keys():
-            self.restore_edge(edge)
+            try:
+                self.restore_edge(edge)
+            except GraphError:
+                pass
 
     def restore_all_nodes(self):
         """

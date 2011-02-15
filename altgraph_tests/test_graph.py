@@ -37,6 +37,7 @@ class TestGraph (unittest.TestCase):
         graph.hide_node(2)
         graph.hide_node(3)
 
+
         self.assertEqual(graph.number_of_nodes(), 0)
         self.assertEqual(graph.number_of_hidden_nodes(), 3)
         self.assertEqual(list(sorted(graph.hidden_node_list())), [1, 2, 3])
@@ -44,6 +45,9 @@ class TestGraph (unittest.TestCase):
         self.assertFalse(1 in graph)
         self.assertFalse(2 in graph)
         self.assertFalse(3 in graph)
+
+        graph.add_node(1)
+        self.assertFalse(1 in graph)
 
         graph.restore_node(1)
         self.assertTrue(1 in graph)
@@ -531,6 +535,17 @@ class TestGraph (unittest.TestCase):
         graph.add_edge(4, 1)
         self.assertTrue(graph.connected())
 
+    def test_edges_complex(self):
+        g = Graph()
+        g.add_edge(1, 2)
+        e = g.edge_by_node(1,2)
+        g.hide_edge(e)
+        g.hide_node(2)
+        self.assertRaises(GraphError, g.restore_edge, e)
+
+        g.restore_all_edges()
+        self.assertRaises(GraphError, g.edge_by_id, e)
+
     def test_clust_coef(self):
         g = Graph()
         g.add_edge(1, 2)
@@ -624,7 +639,6 @@ class TestGraph (unittest.TestCase):
         self.assertEqual(graph.edge_data(graph.edge_by_node(2, 3)), 'a')
 
         self.assertRaises(GraphError, Graph, [(1,2,3,4)])
-
 
 if __name__ == "__main__": # pragma: no cover
     unittest.main()

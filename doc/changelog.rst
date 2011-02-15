@@ -1,10 +1,10 @@
 Release history
 ===============
 
-0.7.3
+0.8
 -----
 
-This is a bugfix release
+This is a minor feature release
 
 Bugfixes:
 
@@ -37,11 +37,18 @@ Features:
   all items have the same size. The (optional) argument can now 
   also be any iterator.
 
+- ``altgraph.Graph.Graph.add_node`` has no effect when you
+  add a hidden node.
+
 - The private method ``altgraph.Graph._bfs`` is no longer
   present.
 
 - The private method ``altgraph.Graph._dfs`` is no longer
   present.
+
+- ``altgraph.ObjectGraph`` now has a ``__contains__`` methods,
+  which means you can use the ``in`` operator to check if a 
+  node is part of a graph.
 
 0.7.2
 -----

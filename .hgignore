@@ -10,3 +10,4 @@ htmlcov
 syntax: glob
 *.dSYM
 *.pyc
+*.swp
