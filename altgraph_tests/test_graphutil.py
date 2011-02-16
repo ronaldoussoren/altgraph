@@ -1,6 +1,6 @@
 import unittest
 from altgraph import GraphUtil
-from altgraph import Graph
+from altgraph import Graph, GraphError
 
 
 class TestGraphUtil (unittest.TestCase):
@@ -50,8 +50,35 @@ class TestGraphUtil (unittest.TestCase):
         else:
             self.fail("no self loops?")
 
+        self.assertRaises(GraphError, GraphUtil.generate_random_graph, 5, 21)
+        g = GraphUtil.generate_random_graph(5, 21, True)
+        self.assertRaises(GraphError, GraphUtil.generate_random_graph, 5, 26, True)
+
     @unittest.expectedFailure
     def test_generate_scale_free(self):
+        graph = GraphUtil.generate_scale_free_graph(50, 10)
+        self.assertEqual(graph.number_of_nodes(), 500)
+
+        counts = {}
+        for node in graph:
+            degree = graph.inc_degree(node)
+            try:
+                counts[degree] += 1
+            except KeyError:
+                counts[degree] = 1
+
+        total_counts = sum(counts.itervalues())
+        P = {}
+        for degree, count in counts.iteritems():
+            P[degree] = count * 1.0 / total_counts
+
+        # XXX: use algoritm <http://stackoverflow.com/questions/3433486/how-to-do-exponential-and-logarithmic-curve-fitting-in-python-i-found-only-polyn>
+        # to check if P[degree] ~ degree ** G (for some G)
+
+        #print sorted(P.iteritems())
+
+        #print sorted([(count, degree) for degree, count in counts.iteritems()])
+
         self.fail("missing tests for GraphUtil.generate_scale_free_graph")
 
     def test_filter_stack(self):

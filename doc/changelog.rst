@@ -50,6 +50,10 @@ Features:
   which means you can use the ``in`` operator to check if a 
   node is part of a graph.
 
+- ``altgraph.GraphUtil.generate_random_graph`` will raise
+  ``GraphError`` instead of looping forever when it is 
+  impossible to create the requested graph.
+
 0.7.2
 -----
 
