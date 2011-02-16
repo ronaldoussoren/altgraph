@@ -8,6 +8,10 @@ This is a minor feature release
 
 Bugfixes:
 
+- Installing failed with Python 2.5 due to using a distutils
+  class that isn't available in that version of Python
+  (issue #1 on the issue tracker)
+
 - ``altgraph.GraphStat.degree_dist`` now actually works
 
 - ``altgraph.Graph.add_edge(a, b, create_nodes=False)`` will
