@@ -7,8 +7,8 @@ class TestGraphUtil (unittest.TestCase):
 
     def test_generate_random(self):
         g =  GraphUtil.generate_random_graph(10, 50)
-        self.assertEquals(g.number_of_nodes(), 10)
-        self.assertEquals(g.number_of_edges(), 50)
+        self.assertEqual(g.number_of_nodes(), 10)
+        self.assertEqual(g.number_of_edges(), 50)
 
         seen = set()
 
@@ -19,8 +19,8 @@ class TestGraphUtil (unittest.TestCase):
             seen.add((h, t))
 
         g =  GraphUtil.generate_random_graph(5, 30, multi_edges=True)
-        self.assertEquals(g.number_of_nodes(), 5)
-        self.assertEquals(g.number_of_edges(), 30)
+        self.assertEqual(g.number_of_nodes(), 5)
+        self.assertEqual(g.number_of_edges(), 30)
 
         seen = set()
 
@@ -35,8 +35,8 @@ class TestGraphUtil (unittest.TestCase):
             self.fail("no duplicates?")
 
         g =  GraphUtil.generate_random_graph(5, 21, self_loops=True)
-        self.assertEquals(g.number_of_nodes(), 5)
-        self.assertEquals(g.number_of_edges(), 21)
+        self.assertEqual(g.number_of_nodes(), 5)
+        self.assertEqual(g.number_of_edges(), 21)
 
         seen = set()
 
