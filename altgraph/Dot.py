@@ -104,6 +104,7 @@ Valid attributes
 '''
 import os
 from itertools import imap
+import warnings
 
 from altgraph import GraphError
 
@@ -131,6 +132,9 @@ class Dot(object):
         self.temp_neo = "tmp_neo.dot"
 
         self.dot, self.dotty, self.neato = dot, dotty, neato
+
+        # self.nodes: node styles
+        # self.edges: edge styles
         self.nodes, self.edges = {}, {}
 
         if graph is not None and nodes is None:
@@ -253,6 +257,7 @@ class Dot(object):
         '''
 
         if not file_name:
+            warnings.warn(DeprecationWarning, "always pass a file_name")
             file_name = self.temp_dot
 
         fp   = open(file_name, "w")
@@ -261,10 +266,14 @@ class Dot(object):
             write(chunk)
         fp.close()
 
-    def save_img(self, file_name="out", file_type="gif", mode='dot'):
+    def save_img(self, file_name=None, file_type="gif", mode='dot'):
         '''
         Saves the dot file as an image file
         '''
+
+        if not file_name:
+            warnings.warn(DeprecationWarning, "always pass a file_name")
+            file_name = "out"
 
         if  mode == 'neato':
             self.save_dot(self.temp_neo)
