@@ -4,7 +4,9 @@ Release history
 0.8
 -----
 
-This is a minor feature release
+This is a minor feature release. The major new feature
+is a extensive set of unittests, which explains almost
+all other changes in this release.
 
 Bugfixes:
 
@@ -57,6 +59,14 @@ Features:
 - ``altgraph.GraphUtil.generate_random_graph`` will raise
   ``GraphError`` instead of looping forever when it is 
   impossible to create the requested graph.
+
+- ``altgraph.Dot.edge_style`` raises ``GraphError`` when
+  one of the nodes is not present in the graph. The method
+  silently added the tail in the past, but without ensuring
+  a consistent graph state.
+
+- ``altgraph.Dot.save_img`` now works when the mode is
+  ``"neato"``.
 
 0.7.2
 -----

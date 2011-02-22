@@ -2,6 +2,13 @@ import unittest
 from altgraph import GraphUtil
 from altgraph import Graph, GraphError
 
+if hasattr(unittest, 'expectedFailure'):
+    expectedFailure = unittest.expectedFailure
+
+else:
+    def expectedFailure(function):
+        return function
+
 
 class TestGraphUtil (unittest.TestCase):
 
@@ -54,7 +61,7 @@ class TestGraphUtil (unittest.TestCase):
         g = GraphUtil.generate_random_graph(5, 21, True)
         self.assertRaises(GraphError, GraphUtil.generate_random_graph, 5, 26, True)
 
-    @unittest.expectedFailure
+    @expectedFailure
     def test_generate_scale_free(self):
         graph = GraphUtil.generate_scale_free_graph(50, 10)
         self.assertEqual(graph.number_of_nodes(), 500)

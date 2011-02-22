@@ -103,7 +103,7 @@ Valid attributes
       `graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
 '''
 import os
-from itertools import imap
+from itertools import imap, ifilter
 import warnings
 
 from altgraph import GraphError
@@ -141,7 +141,7 @@ class Dot(object):
             nodes = graph
         if graph is not None and edgefn is None:
             def edgefn(node, graph=graph):
-                return imap(graph.tail, graph.out_edges(node))
+                return graph.out_nbrs(node)
         if nodes is None:
             nodes = ()
 
@@ -152,6 +152,7 @@ class Dot(object):
             else:
                 style = nodevisitor(node)
             if style is not None:
+                self.nodes[node] = {}
                 self.node_style(node, **style)
                 seen.add(node)
         if edgefn is not None:
@@ -162,6 +163,9 @@ class Dot(object):
                     else:
                         edgestyle = edgevisitor(head, tail)
                     if edgestyle is not None:
+                        if head not in self.edges:
+                            self.edges[head] = {}
+                        self.edges[head][tail] = {}
                         self.edge_style(head, tail, **edgestyle)
 
     def style(self, **attr):
@@ -204,6 +208,9 @@ class Dot(object):
         '''
         Modifies an edge style to the dot representation.
         '''
+        if tail not in self.nodes:
+            raise GraphError("invalid node %s" % (tail,))
+
         try:
             if tail not in self.edges[head]:
                 self.edges[head][tail]= {}
@@ -217,6 +224,9 @@ class Dot(object):
             yield 'digraph %s {\n' % (self.name,)
         elif self.type == 'graph':
             yield 'graph %s {\n' % (self.name,)
+
+        else:
+            raise GraphError("unsupported graphtype %s" % (self.type,))
 
         # write overall graph attributes
         for attr_name, attr_value in self.attr.iteritems():
@@ -261,10 +271,11 @@ class Dot(object):
             file_name = self.temp_dot
 
         fp   = open(file_name, "w")
-        write = fp.write
-        for chunk in self.iterdot():
-            write(chunk)
-        fp.close()
+        try:
+            for chunk in self.iterdot():
+                fp.write(chunk)
+        finally:
+            fp.close()
 
     def save_img(self, file_name=None, file_type="gif", mode='dot'):
         '''
@@ -279,7 +290,7 @@ class Dot(object):
             self.save_dot(self.temp_neo)
             neato_cmd = "%s -o %s %s" % (self.neato, self.temp_dot, self.temp_neo)
             os.system(neato_cmd)
-            plot_cmd = self.neato
+            plot_cmd = self.dot
         else:
             self.save_dot(self.temp_dot)
             plot_cmd = self.dot

@@ -114,15 +114,17 @@ Class interface
 .. class:: Dot(graph[, nodes[, edgefn[, nodevisitor[, edgevisitor[, name[, dot[, dotty[, neato[, graphtype]]]]]]]]])
 
   Creates a new Dot generator based on the specified 
-  :class:`Graph <altgraph.Graph.Graph>`.  The *graph* should not be modified
-  while the :class:`Dot` instance is in use.
+  :class:`Graph <altgraph.Graph.Graph>`.  The Dot generator won't reference
+  the *graph* once it is constructed.
 
   If the *nodes* argument is present it is the list of nodes to include
   in the graph, otherwise all nodes in *graph* are included.
   
   If the *edgefn* argument is present it is a function that yields the
   nodes connected to another node, this defaults to 
-  :meth:`graph.out_nbr <altgraph.Graph.Graph.out_nbr>`.
+  :meth:`graph.out_nbr <altgraph.Graph.Graph.out_nbr>`. The constructor won't
+  add edges to the dot file unless both the head and tail of the edge
+  are in *nodes*.
 
   If the *name* is present it specifies the name of the graph in the resulting
   dot file. The default is ``"G"``.
@@ -148,9 +150,8 @@ Updating graph attributes
 
    Sets the style for *node* to the given attributes.
 
-   This will add a node to the displayed graph if it isn't already
-   part of the graph, but without adding its edges. Note that the node
-   must be part of the current graph.
+   This method will add *node* to the graph when it isn't already 
+   present.
 
    See `Valid Attributes`_ for more information about the attributes.
 
@@ -161,9 +162,9 @@ Updating graph attributes
 
 .. method:: edge_style(head, tail, \**attr)
 
-   Sets the style of an edge to the given attributes. The edge must
-   be present in the dotty representation of the graph, it is not
-   possible to add new edges using this method.
+   Sets the style of an edge to the given attributes. The edge will
+   be added to the graph when it isn't already present, but *head*
+   and *tail* must both be valid nodes.
 
    See `Valid Attributes`_ for more information about the attributes.
 
@@ -216,7 +217,7 @@ Emitting output
 
 .. method:: iterdot()
 
-   Yields all lines of a `graphviz`_ input file (without line endings).
+   Yields all lines of a `graphviz`_ input file (including line endings).
 
 .. method:: __iter__()
 

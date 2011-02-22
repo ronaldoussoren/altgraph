@@ -72,7 +72,7 @@ class TestGraph (unittest.TestCase):
         graph.add_node(4)
         graph.add_node(5)
 
-        self.assertIsInstance(graph.edge_list(), list)
+        self.assertTrue(isinstance(graph.edge_list(), list))
 
         graph.add_edge(1, 2)
         graph.add_edge(4, 5, 'a')
@@ -82,7 +82,7 @@ class TestGraph (unittest.TestCase):
         self.assertEqual(graph.number_of_hidden_edges(), 0)
         self.assertEqual(graph.number_of_edges(), 2)
         e = graph.edge_by_node(1, 2)
-        self.assertIsInstance(e, int)
+        self.assertTrue(isinstance(e, int))
         graph.hide_edge(e)
         self.assertEqual(graph.number_of_hidden_edges(), 1)
         self.assertEqual(graph.number_of_edges(), 1)
