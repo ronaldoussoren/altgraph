@@ -132,6 +132,6 @@ def filter_stack(graph, head, filters):
                 stack.append((last_good, tail))
 
     orphans = [(last_good, tail) for (last_good, tail) in orphans if tail not in removes]
-    orphans.sort()
+    #orphans.sort()
 
     return visited, removes, orphans
