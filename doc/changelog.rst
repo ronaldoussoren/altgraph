@@ -1,6 +1,17 @@
 Release history
 ===============
 
+0.8.1
+-----
+
+This is a minor bugfix release
+
+Bugfixes:
+
+- The 0.8 release didn't work with py2app when using
+  python 3.x.
+
+
 0.8
 -----
 
