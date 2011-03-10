@@ -312,7 +312,7 @@ class Graph(object):
         List of nodes connected by outgoing edges
         """
         l = map(self.tail, self.out_edges(node))
-        l.sort()
+        #l.sort()
         return l
 
     def inc_nbrs(self, node):
@@ -320,7 +320,7 @@ class Graph(object):
         List of nodes connected by incoming edges
         """
         l = map(self.head, self.inc_edges(node))
-        l.sort()
+        #l.sort()
         return l
 
     def all_nbrs(self, node):
@@ -328,7 +328,7 @@ class Graph(object):
         List of nodes connected by incoming and outgoing edges
         """
         l = dict.fromkeys( self.inc_nbrs(node) + self.out_nbrs(node) )
-        return list(sorted(l))
+        return list(l)
 
     def out_edges(self, node):
         """
