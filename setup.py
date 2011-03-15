@@ -22,7 +22,7 @@ from distutils import log
 
 import sys
 
-VERSION = '0.8.1'
+VERSION = '0.9'
 DESCRIPTION = "Python graph (network) package"
 LONG_DESCRIPTION = """
 altgraph is a fork of graphlib: a graph (network) package for constructing

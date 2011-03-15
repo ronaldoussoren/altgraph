@@ -1,8 +1,8 @@
 Release history
 ===============
 
-0.8.1
------
+0.9
+---
 
 This is a minor bugfix release
 
