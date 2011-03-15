@@ -39,6 +39,13 @@ class ObjectGraph(object):
         start = self.getRawIdent(start)
         return self.graph.iterdata(start=start, condition=condition)
 
+    def nodes(self):
+        for ident in self.graph:
+            node = self.graph.node_data(ident)
+            if node is not None:
+                yield self.graph.node_data(ident)
+
+
     def get_edges(self, node):
         start = self.getRawIdent(node)
         _, _, outraw, incraw = self.graph.describe_node(start)

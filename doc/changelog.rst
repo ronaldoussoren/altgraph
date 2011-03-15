@@ -6,6 +6,11 @@ Release history
 
 This is a minor bugfix release
 
+Features:
+
+- Added ``altgraph.ObjectGraph.ObjectGraph.nodes``, a method
+  yielding all nodes in an object graph.
+
 Bugfixes:
 
 - The 0.8 release didn't work with py2app when using

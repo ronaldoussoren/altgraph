@@ -200,6 +200,28 @@ class TestObjectGraph (unittest.TestCase):
         self.assertTrue(n7 in fl)
         self.assertFalse(n8 in fl)
 
+    def test_iter_nodes(self):
+        graph = ObjectGraph()
+        n1 = graph.createNode(ArgNode, "n1", 1)
+        n2 = graph.createNode(ArgNode, "n2", 2)
+        n3 = graph.createNode(ArgNode, "n3", 3)
+        n4 = graph.createNode(ArgNode, "n4", 4)
+        n5 = graph.createNode(ArgNode, "n5", 5)
+        n6 = graph.createNode(ArgNode, "n6", 5)
+
+        nodes = graph.nodes()
+        self.assertTrue(hasattr(nodes, 'next'))
+        self.assertTrue(hasattr(nodes, '__iter__'))
+
+        nodes = list(nodes)
+        self.assertEqual(len(nodes), 6)
+        self.assertTrue(n1 in nodes)
+        self.assertTrue(n2 in nodes)
+        self.assertTrue(n3 in nodes)
+        self.assertTrue(n4 in nodes)
+        self.assertTrue(n5 in nodes)
+        self.assertTrue(n6 in nodes)
+
     def test_get_edges(self):
         graph = ObjectGraph()
         n1 = graph.createNode(ArgNode, "n1", 1)

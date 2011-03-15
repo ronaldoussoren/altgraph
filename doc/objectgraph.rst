@@ -93,6 +93,10 @@
       when there is a reference from the root to the node
       (either directly or through another node)
 
+.. method:: ObjectGraph.nodes()
+
+   Yield all nodes in the graph.
+
 .. method:: ObjectGraph.get_edges(node)
 
    Returns two iterators that yield the nodes reaching by
