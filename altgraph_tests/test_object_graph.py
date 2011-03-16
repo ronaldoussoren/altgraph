@@ -210,7 +210,10 @@ class TestObjectGraph (unittest.TestCase):
         n6 = graph.createNode(ArgNode, "n6", 5)
 
         nodes = graph.nodes()
-        self.assertTrue(hasattr(nodes, 'next'))
+        if sys.version[0] == '2':
+            self.assertTrue(hasattr(nodes, 'next'))
+        else:
+            self.assertTrue(hasattr(nodes, '__next__'))
         self.assertTrue(hasattr(nodes, '__iter__'))
 
         nodes = list(nodes)

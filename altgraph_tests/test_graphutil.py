@@ -65,17 +65,17 @@ class TestGraphUtil (unittest.TestCase):
             except KeyError:
                 counts[degree] = 1
 
-        total_counts = sum(counts.itervalues())
+        total_counts = sum(counts.values())
         P = {}
-        for degree, count in counts.iteritems():
+        for degree, count in counts.items():
             P[degree] = count * 1.0 / total_counts
 
         # XXX: use algoritm <http://stackoverflow.com/questions/3433486/how-to-do-exponential-and-logarithmic-curve-fitting-in-python-i-found-only-polyn>
         # to check if P[degree] ~ degree ** G (for some G)
 
-        #print sorted(P.iteritems())
+        #print sorted(P.items())
 
-        #print sorted([(count, degree) for degree, count in counts.iteritems()])
+        #print sorted([(count, degree) for degree, count in counts.items()])
 
         #self.fail("missing tests for GraphUtil.generate_scale_free_graph")
 
