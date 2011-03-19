@@ -1,6 +1,125 @@
-#!/usr/bin/env python
+"""
+Shared setup file for simple python packages. Uses a setup.cfg that
+is the same as the distutils2 project, unless noted otherwise.
+
+Currently does not support extensions, distribution_requires, 
+and platform tests.
+"""
+
+import sys
+import os
+from fnmatch import fnmatch
+
+if sys.version_info[0] == 2:
+    from ConfigParser import RawConfigParser, NoOptionError, NoSectionError
+else:
+    from configparser import RawConfigParser, NoOptionError, NoSectionError
+
+ROOTDIR = os.path.dirname(os.path.abspath(__file__))
+
+def _opt_value(cfg, into, section, key, transform = None):
+    try:
+        v = cfg.get(section, key)
+        if v:
+            if transform:
+                into[key] = transform(v.strip())
+            else:
+                into[key] = v.strip()
+
+    except (NoOptionError, NoSectionError):
+        pass
+
+def _as_bool(value):
+    if value.lower() in ('y', 'yes', 'on'):
+        return True
+    elif value.lower() in ('n', 'no', 'off'):
+        return False
+    elif value.isdigit():
+        return bool(int(value))
+    else:
+        raise ValueError(value)
+
+def _as_list(value):
+    return value.split()
+
+def _as_lines(value):
+    return [ln for ln in value.splitlines() if ln]
 
 
+def parse_setup_cfg():
+    cfg = RawConfigParser()
+    r = cfg.read([os.path.join(ROOTDIR, 'setup.cfg')])
+    if len(r) != 1:
+        print("Cannot read 'setup.cfg'")
+        sys.exit(1)
+
+    metadata = dict(
+            name        = cfg.get('metadata', 'name'),
+            version     = cfg.get('metadata', 'version'),
+            description = cfg.get('metadata', 'description'),
+    )
+
+    _opt_value(cfg, metadata, 'metadata', 'license')
+    _opt_value(cfg, metadata, 'metadata', 'maintainer')
+    _opt_value(cfg, metadata, 'metadata', 'maintainer_email')
+    _opt_value(cfg, metadata, 'metadata', 'author')
+    _opt_value(cfg, metadata, 'metadata', 'author_email')
+    _opt_value(cfg, metadata, 'metadata', 'url')
+    _opt_value(cfg, metadata, 'metadata', 'download_url')
+    _opt_value(cfg, metadata, 'metadata', 'classifiers', _as_list)
+    _opt_value(cfg, metadata, 'metadata', 'platforms', _as_list)
+    _opt_value(cfg, metadata, 'metadata', 'packages', _as_list)
+    _opt_value(cfg, metadata, 'metadata', 'install_requires', _as_lines)
+
+
+    try:
+        v = cfg.get('metadata', 'long_description_file')
+    except (NoOptionError, NoSectionError):
+        pass
+
+    else:
+        parts = []
+        for nm in v.split():
+            fp = open(nm, 'rU')
+            parts.append(fp.read())
+            fp.close()
+
+        metadata['long_description'] = '\n\n'.join(parts)
+
+        
+    try:
+        v = cfg.get('metadata', 'zip-safe')
+    except (NoOptionError, NoSectionError):
+        pass
+
+    else:
+        metadata['zip_safe'] = _as_bool(v)
+
+    try:
+        v = cfg.get('metadata', 'console_scripts')
+    except (NoOptionError, NoSectionError):
+        pass
+
+    else:
+        if 'entry_points' not in metadata:
+            metadata['entry_points'] = {}
+
+        metadata['entry_points']['console_scripts'] = v.splitlines()
+
+
+
+    options = {}
+    _opt_value(cfg, options, 'x-setup-stub', 'distribute-version')
+
+    return metadata, options
+
+
+metadata, options = parse_setup_cfg()
+
+# XXX: Use values from 'options' to ensure
+# that we have the right version of setuptoosls/distribute
+# (if any: we don't actually need those when there are
+# no dependencies!)
 try:
     import setuptools
 
@@ -14,40 +133,12 @@ try:
     from distutils.core import PyPIRCCommand
 except ImportError:
     PyPIRCCommand = None # Ancient python version
-    from distutils.core import Command
 
+from distutils.core import Command
 from distutils.errors  import DistutilsError
 from distutils import log
 
-
-import sys
-
-VERSION = '0.9'
-DESCRIPTION = "Python graph (network) package"
-LONG_DESCRIPTION = """
-altgraph is a fork of graphlib: a graph (network) package for constructing
-graphs, BFS and DFS traversals, topological sort, shortest paths, etc. with
-graphviz output.
-
-altgraph includes some additional usage of Python 2.3+ features and
-enhancements related to modulegraph and macholib.
-
-"""
-
-LONG_DESCRIPTION += open('doc/changelog.rst', 'rU').read()
-
-CLASSIFIERS = filter(None, map(str.strip,
-"""                 
-Intended Audience :: Developers
-License :: OSI Approved :: MIT License
-Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 3
-Topic :: Software Development :: Libraries :: Python Modules
-Topic :: Scientific/Engineering :: Mathematics
-Topic :: Scientific/Engineering :: Visualization
-""".splitlines()))
-
+# XXX: This needs to be in setup.cfg as well
 if sys.version_info[0] == 3:
     extra_args = dict(use_2to3=True)
 else:
@@ -209,25 +300,164 @@ else:
                 print (r.read())
                 print ('-'*75)
 
+
+def recursiveGlob(root, pathPattern):
+    """
+    Recursively look for files matching 'pathPattern'. Return a list
+    of matching files/directories.
+    """
+    result = []
+
+    for rootpath, dirnames, filenames in os.walk(root):
+        for fn in filenames:
+            if fnmatch(fn, pathPattern):
+                result.append(os.path.join(rootpath, fn))
+    return result
+        
+
+def importExternalTestCases(unittest, 
+        pathPattern="test_*.py", root=".", package=None):
+    """
+    Import all unittests in the PyObjC tree starting at 'root'
+    """
+
+    testFiles = recursiveGlob(root, pathPattern)
+    testModules = map(lambda x:x[len(root)+1:-3].replace('/', '.'), testFiles)
+    if package is not None:
+        testModules = [(package + '.' + m) for m in testModules]
+
+    suites = []
+   
+    for modName in testModules:
+        try:
+            module = __import__(modName)
+        except ImportError:
+            print("SKIP %s: %s"%(modName, sys.exc_info()[1]))
+            continue
+
+        if '.' in modName:
+            for elem in modName.split('.')[1:]:
+                module = getattr(module, elem)
+
+        s = unittest.defaultTestLoader.loadTestsFromModule(module)
+        suites.append(s)
+
+    return unittest.TestSuite(suites)
+
+
+
+class test (Command):
+    description = "run test suite"
+    user_options = [
+        ('verbosity=', None, "print what tests are run"),
+    ]
+
+    def initialize_options(self):
+        self.verbosity='1'
+
+    def finalize_options(self):
+        if isinstance(self.verbosity, str):
+            self.verbosity = int(self.verbosity)
+
+
+    def cleanup_environment(self):
+        ei_cmd = self.get_finalized_command('egg_info')
+        egg_name = ei_cmd.egg_name.replace('-', '_')
+
+        to_remove =  []
+        for dirname in sys.path:
+            bn = os.path.basename(dirname)
+            if bn.startswith(egg_name + "-"):
+                to_remove.append(dirname)
+
+        for dirname in to_remove:
+            log.info("removing installed %r from sys.path before testing"%(
+                dirname,))
+            sys.path.remove(dirname)
+
+    def add_project_to_sys_path(self):
+        from pkg_resources import normalize_path, add_activation_listener
+        from pkg_resources import working_set, require
+
+        if getattr(self.distribution, 'use_2to3', False):
+
+            # Using 2to3, cannot do this inplace:
+            self.reinitialize_command('build_py', inplace=0)
+            self.run_command('build_py')
+            bpy_cmd = self.get_finalized_command("build_py")
+            build_path = normalize_path(bpy_cmd.build_lib)
+
+            self.reinitialize_command('egg_info', egg_base=build_path)
+            self.run_command('egg_info')
+
+            self.reinitialize_command('build_ext', inplace=0)
+            self.run_command('build_ext')
+
+        else:
+            self.reinitialize_command('egg_info')
+            self.run_command('egg_info')
+            self.reinitialize_command('build_ext', inplace=1)
+            self.run_command('build_ext')
+        
+        self.__old_path = sys.path[:]
+        self.__old_modules = sys.modules.copy()
+
+
+        ei_cmd = self.get_finalized_command('egg_info')
+        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
+        sys.path.insert(1, os.path.dirname(__file__))
+            
+        add_activation_listener(lambda dist: dist.activate())
+        working_set.__init__()
+        require('%s==%s'%(ei_cmd.egg_name, ei_cmd.egg_version))
+
+    def remove_from_sys_path(self):
+        from pkg_resources import working_set
+        sys.path[:] = self.__old_path
+        sys.modules.clear()
+        sys.modules.update(self.__old_modules)
+        working_set.__init__()
+
+
+    def run(self):
+        import unittest
+
+        # Ensure that build directory is on sys.path (py3k)
+
+        self.cleanup_environment()
+        self.add_project_to_sys_path()
+
+        try:
+            meta = self.distribution.metadata
+            name = meta.get_name()
+            test_pkg = name + "_tests"
+            suite = importExternalTestCases(unittest, 
+                    "test_*.py", test_pkg, test_pkg)
+
+            runner = unittest.TextTestRunner(verbosity=self.verbosity)
+            result = runner.run(suite)
+
+            # Print out summary. This is a structured format that
+            # should make it easy to use this information in scripts.
+            summary = dict(
+                count=result.testsRun,
+                fails=len(result.failures),
+                errors=len(result.errors),
+                xfails=len(getattr(result, 'expectedFailures', [])),
+                xpass=len(getattr(result, 'expectedSuccesses', [])),
+                skip=len(getattr(result, 'skipped', [])),
+            )
+            print("SUMMARY: %s"%(summary,))
+
+        finally:
+            self.remove_from_sys_path()
+
+
+metadata.update(extra_args)
 setup(
-    name="altgraph",
-    version=VERSION,
-    description=DESCRIPTION,
-    long_description=LONG_DESCRIPTION,
-    classifiers=CLASSIFIERS,
-    author="Bob Ippolito",
-    author_email="bob@redivi.com",
-    maintainer="Ronald Oussoren",
-    maintainer_email="ronaldoussoren@mac.com",
-    url="http://packages.python.org/altgraph",
-    download_url="http://pypi.python.org/pypi/altgraph",
-    license="MIT License",
-    packages=['altgraph'],
-    platforms=['any'],
-    test_suite='altgraph_tests',
-    zip_safe=True,
     cmdclass=dict(
         upload_docs=upload_docs,
+        test=test,
     ),
-    **extra_args
+    **metadata
 )
