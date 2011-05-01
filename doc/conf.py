@@ -19,7 +19,7 @@ def get_version():
             'setup.cfg')
     for ln in open(fn):
         if ln.startswith('version'):
-            version = ln.split('=')[-1].strip()[1:-1]
+            version = ln.split('=')[-1].strip()
             return version
 
 # If extensions (or modules to document with autodoc) are in another directory,
