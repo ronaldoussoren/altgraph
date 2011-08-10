@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Documentation for altgraph
-==========================
+Altgraph - A basic graph library
+================================
 
 altgraph is a fork of graphlib: a graph (network) package for constructing
 graphs, BFS and DFS traversals, topological sort, shortest paths, etc. with
@@ -26,14 +26,14 @@ The primary users of this package are `macholib <http://pypi.python.org/pypi/mac
    dot
 
 Online Resources
-================
+----------------
 
 * `Sourcecode repository on bitbucket <http://bitbucket.org/ronaldoussoren/altgraph/>`_
 
 * `The issue tracker <http://bitbucket.org/ronaldoussoren/altgraph/issues>`_
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
