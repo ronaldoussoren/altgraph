@@ -265,13 +265,6 @@ from distutils.core import Command
 from distutils.errors  import DistutilsError
 from distutils import log
 
-# XXX: This needs to be in setup.cfg as well
-if sys.version_info[0] == 3:
-    extra_args = dict(use_2to3=True)
-else:
-    extra_args = dict()
-
-
 if PyPIRCCommand is None:
     class upload_docs (Command):
         description = "upload sphinx documentation"
@@ -506,25 +499,10 @@ class test (Command):
         from pkg_resources import normalize_path, add_activation_listener
         from pkg_resources import working_set, require
 
-        if getattr(self.distribution, 'use_2to3', False):
-
-            # Using 2to3, cannot do this inplace:
-            self.reinitialize_command('build_py', inplace=0)
-            self.run_command('build_py')
-            bpy_cmd = self.get_finalized_command("build_py")
-            build_path = normalize_path(bpy_cmd.build_lib)
-
-            self.reinitialize_command('egg_info', egg_base=build_path)
-            self.run_command('egg_info')
-
-            self.reinitialize_command('build_ext', inplace=0)
-            self.run_command('build_ext')
-
-        else:
-            self.reinitialize_command('egg_info')
-            self.run_command('egg_info')
-            self.reinitialize_command('build_ext', inplace=1)
-            self.run_command('build_ext')
+        self.reinitialize_command('egg_info')
+        self.run_command('egg_info')
+        self.reinitialize_command('build_ext', inplace=1)
+        self.run_command('build_ext')
 
 
         # Check if this distribution is already on sys.path
@@ -595,7 +573,6 @@ class test (Command):
             self.remove_from_sys_path()
 
 
-metadata.update(extra_args)
 setup(
     cmdclass=dict(
         upload_docs=upload_docs,

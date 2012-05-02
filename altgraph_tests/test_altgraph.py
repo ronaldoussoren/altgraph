@@ -5,8 +5,6 @@ import sys
 from altgraph import Graph, GraphAlgo
 import unittest
 
-import altgraph.compat 
-
 class BasicTests (unittest.TestCase):
     def setUp(self):
         self.edges = [ 
@@ -41,11 +39,6 @@ class BasicTests (unittest.TestCase):
     def test_shortest_path(self):
         self.assertEqual(GraphAlgo.shortest_path(self.g, 1, 12), 
                 [1, 2, 4, 5, 7, 13, 11, 12])
-
-class TestCompat (unittest.TestCase):
-    def test_itertools(self):
-        self.assertEqual(list(altgraph.compat.ireversed([1,2,3])), [3,2,1])
-        self.assertEqual("".join(altgraph.compat.ireversed("asd")), "dsa")
 
 
 if __name__ == "__main__":  # pragma: no cover

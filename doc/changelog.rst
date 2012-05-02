@@ -1,10 +1,18 @@
 Release history
 ===============
 
-0.9.1
+0.10
 -----
 
-?
+This is a minor feature release
+
+Features:
+
+- Do not use "2to3" to support Python 3.
+
+  As a side effect of this altgraph now supports
+  Python 2.6 and later, and no longer supports 
+  earlier releases of Python.
 
 0.9
 ---

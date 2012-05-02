@@ -42,7 +42,7 @@ def _binning(values, limits=(0,0), bin_num=10):
     and the second element of the tuple are the counts.
     '''
     if limits == (0, 0):
-        eps = 1.0/sys.maxint
+        eps = 1.0/sys.maxsize
         min_val, max_val = min(values) - eps, max(values) + eps
     else:
         min_val, max_val = limits
