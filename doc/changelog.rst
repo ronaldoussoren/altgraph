@@ -14,6 +14,12 @@ Features:
   Python 2.6 and later, and no longer supports 
   earlier releases of Python.
 
+- The order of attributes in the Dot output
+  is now always alphabetical. 
+  
+  With this change the output will be consistent 
+  between runs and Python versions.
+
 0.9
 ---
 

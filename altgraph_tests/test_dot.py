@@ -200,8 +200,8 @@ class TestDot (unittest.TestCase):
             '];\n',
 
             '\t"2" [',
-              'key2="world",',
               'key="another",',
+              'key2="world",',
             '];\n',
 
             '\t"3" [',
@@ -223,8 +223,8 @@ class TestDot (unittest.TestCase):
             '];\n',
 
             '\t"1" -> "4" [',
-              'key2="value2",',
               'key1="value1",',
+              'key2="value2",',
             '];\n',
 
              '\t"2" -> "4" [',
