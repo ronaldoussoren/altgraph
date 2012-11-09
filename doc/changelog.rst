@@ -1,6 +1,21 @@
 Release history
 ===============
 
+0.10.1
+------
+
+This is a bugfix release
+
+Bug fixes:
+
+- Issue #3: The source archive contains a README.txt
+  while the setup file refers to ReadMe.txt.
+
+  This is caused by a misfeature in distutils, as a
+  workaround I've renamed ReadMe.txt to README.txt
+  in the source tree and setup file.
+
+
 0.10
 -----
 
