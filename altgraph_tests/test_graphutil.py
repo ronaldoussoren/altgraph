@@ -116,7 +116,7 @@ class TestGraphUtil (unittest.TestCase):
         o.sort()
         self.assertEqual(o,
             [
-                ("1.1", "1.1.1.1"), 
+                ("1.1", "1.1.1.1"),
                 ("1.1", "1.1.1.2")
             ])
 
@@ -132,7 +132,7 @@ class TestGraphUtil (unittest.TestCase):
 
         self.assertEqual(o,
             [
-                ("1.1", "1.1.1.1"), 
+                ("1.1", "1.1.1.1"),
             ])
 
 

@@ -44,8 +44,8 @@ class TestDot (unittest.TestCase):
         self.assertEqual(dot.edges, edges)
 
 
-        dot = Dot.Dot(g, nodes=[1,2], 
-                edgefn=lambda node: list(sorted(g.out_nbrs(node)))[:-1], 
+        dot = Dot.Dot(g, nodes=[1,2],
+                edgefn=lambda node: list(sorted(g.out_nbrs(node)))[:-1],
                 nodevisitor=lambda node: {'label': node},
                 edgevisitor=lambda head, tail: {'label': (head, tail) },
                 name="testgraph",
@@ -149,7 +149,7 @@ class TestDot (unittest.TestCase):
         self.assertFalse(6 in dot.edges[1])
         dot.edge_style(1,6, foo2='2bar')
         self.assertEqual(dot.edges[1][6], {'foo2': '2bar'})
-        
+
         self.assertRaises(GraphError, dot.edge_style, 1, 9, a=1)
         self.assertRaises(GraphError, dot.edge_style, 9, 1, a=1)
 
@@ -189,7 +189,7 @@ class TestDot (unittest.TestCase):
         dot.type = 'foo'
         self.assertRaises(GraphError, list, dot.iterdot())
         dot.type = 'digraph'
-    
+
         self.assertEqual(list(dot), [
             'digraph G {\n',
               'graph="foobar";',

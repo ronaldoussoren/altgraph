@@ -87,7 +87,7 @@ class TestObjectGraph (unittest.TestCase):
         self.assertTrue(n3 in graph)
         graph.removeNode(n3)
         self.assertTrue(n3 not in graph)
-        graph.addNode(n3) 
+        graph.addNode(n3)
         self.assertTrue(n3 in graph)
 
         n = graph.createNode(SubNode, "n1")

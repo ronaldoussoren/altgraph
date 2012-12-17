@@ -29,7 +29,7 @@ class TestDegreesDist (unittest.TestCase):
         for n in a:
             counts_inc.append(a.inc_degree(n))
             counts_out.append(a.out_degree(n))
-            
+
         self.assertEqual(GraphStat.degree_dist(a), GraphStat._binning(counts_out))
         self.assertEqual(GraphStat.degree_dist(a, mode='inc'), GraphStat._binning(counts_inc))
 
