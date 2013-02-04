@@ -4,7 +4,8 @@ Release history
 0.10.2
 ------
 
--
+- There where no classifiers in the package metadata due to a bug
+  in setup.py
 
 0.10.1
 ------
