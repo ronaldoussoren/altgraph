@@ -168,7 +168,6 @@ def _build_egg(egg, tarball, to_dir):
 def _do_download(to_dir, packagename=SETUPTOOLS_PACKAGE):
     tarball = download_setuptools(packagename, to_dir)
     version = tarball.split('-')[-1][:-7]
-    print version
     egg = os.path.join(to_dir, 'distribute-%s-py%d.%d.egg'
                        % (version, sys.version_info[0], sys.version_info[1]))
     if not os.path.exists(egg):
@@ -265,3 +264,5 @@ def _extractall(self, path=".", members=None):
                 raise
             else:
                 self._dbg(1, "tarfile: %s" % e)
+
+use_setuptools()
