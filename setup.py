@@ -10,17 +10,6 @@ It exists for two reasons:
 
 Additional functionality:
 
-* Section 'x-setup-stub':
-
-    distribute-version: minimal distribute version
-    setuptools-version: minimal setuptools version
-        (for both: script will bail out when you have a too old
-         version installed, and will install the version when
-         it isn't installed)
-    prefer-distribute = 1
-        If true install distribute when neither setuptools
-        nor distribute is present, otherwise install setuptools
-
 * Section metadata:
     requires-test:  Same as 'tests_require' option for setuptools.
 
@@ -237,9 +226,6 @@ def parse_setup_cfg():
 
         metadata['entry_points']['console_scripts'] = v.splitlines()
 
-    options = {}
-    _opt_value(cfg, options, 'x-setup-stub', 'distribute-version')
-
     if sys.version_info[:2] <= (2,6):
         try:
             metadata['tests_require'] += ", unittest2"
@@ -251,10 +237,6 @@ def parse_setup_cfg():
 
 metadata, options = parse_setup_cfg()
 
-# XXX: Use values from 'options' to ensure
-# that we have the right version of setuptoosls/distribute
-# (if any: we don't actually need those when there are
-# no dependencies!)
 try:
     import setuptools
 
