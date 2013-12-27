@@ -128,8 +128,8 @@ To display the graph we can use the GraphViz backend::
   @contributor: U{Reka Albert <http://www.phys.psu.edu/~ralbert/>}
 
 '''
-
-__version__ = '0.7.0'
+import pkg_resources
+__version__ = pkg_resources.require('altgraph')[0].version
 
 class GraphError(ValueError):
     pass
