@@ -5,7 +5,7 @@ Copyright (c) 2004 Istvan Albert unless otherwise noted.
 
 Parts are copyright (c) Bob Ippolito
 
-Parts are copyright (c) 2010-2013 Ronald Oussoren
+Parts are copyright (c) 2010-2014 Ronald Oussoren
 
 MIT License
 ...........
