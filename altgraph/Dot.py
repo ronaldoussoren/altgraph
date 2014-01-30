@@ -244,8 +244,8 @@ class Dot(object):
             yield epatt
 
         # write edge attributes
-        for head in self.edges:
-            for tail in self.edges[head]:
+        for head in sorted(self.edges):
+            for tail in sorted(self.edges[head]):
                 if self.type == 'digraph':
                     yield '\t"%s" -> "%s" [' % (head, tail)
                 else:
