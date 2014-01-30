@@ -13,7 +13,7 @@ represents a directed graph with *N* nodes and *E* edges.
   *edges* parameter is supplied, updates the graph by adding the
   specified edges. 
   
-  Alle of the elements in *edges* should be tuples with two or three 
+  All of the elements in *edges* should be tuples with two or three 
   elements. The first two elements of the tuple are the source and
   destination node of the edge, the optional third element is the
   edge data.  The source and destination nodes are added to the graph
