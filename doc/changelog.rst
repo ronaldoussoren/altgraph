@@ -1,6 +1,16 @@
 Release history
 ===============
 
+0.11
+----
+
+- Stabilize the order of elements in dot file exports,
+  patch from bitbucket user 'pombredanne'.
+
+- Tweak setup.py file to remove dependency on distribute (but
+  keep the dependency on setuptools)
+
+
 0.10.2
 ------
 
@@ -32,13 +42,13 @@ Features:
 - Do not use "2to3" to support Python 3.
 
   As a side effect of this altgraph now supports
-  Python 2.6 and later, and no longer supports 
+  Python 2.6 and later, and no longer supports
   earlier releases of Python.
 
 - The order of attributes in the Dot output
-  is now always alphabetical. 
-  
-  With this change the output will be consistent 
+  is now always alphabetical.
+
+  With this change the output will be consistent
   between runs and Python versions.
 
 0.9
@@ -78,7 +88,7 @@ Bugfixes:
 
 - ``altgraph.Graph.forw_topo_sort`` failed for some sparse graphs.
 
-- ``altgraph.Graph.back_topo_sort`` was completely broken in 
+- ``altgraph.Graph.back_topo_sort`` was completely broken in
   previous releases.
 
 - ``altgraph.Graph.forw_bfs_subgraph`` now actually works.
@@ -96,7 +106,7 @@ Features:
 
 - The ``altgraph.Graph`` constructor now accepts an argument
   that contains 2- and 3-tuples instead of requireing that
-  all items have the same size. The (optional) argument can now 
+  all items have the same size. The (optional) argument can now
   also be any iterator.
 
 - ``altgraph.Graph.Graph.add_node`` has no effect when you
@@ -109,11 +119,11 @@ Features:
   present.
 
 - ``altgraph.ObjectGraph`` now has a ``__contains__`` methods,
-  which means you can use the ``in`` operator to check if a 
+  which means you can use the ``in`` operator to check if a
   node is part of a graph.
 
 - ``altgraph.GraphUtil.generate_random_graph`` will raise
-  ``GraphError`` instead of looping forever when it is 
+  ``GraphError`` instead of looping forever when it is
   impossible to create the requested graph.
 
 - ``altgraph.Dot.edge_style`` raises ``GraphError`` when
@@ -143,7 +153,7 @@ Features:
 - Documentation is now generated using `sphinx <http://pypi.python.org/pypi/sphinx>`_
   and can be viewed at <http://packages.python.org/altgraph>.
 
-- The repository has moved to bitbucket 
+- The repository has moved to bitbucket
 
 - ``altgraph.GraphStat.avg_hops`` is no longer present, the function had no
   implementation and no specified behaviour.
