@@ -10,7 +10,7 @@
    value of this attribute is the key for the object in the
    graph.
 
-   The optional *graph* is a previously constructed 
+   The optional *graph* is a previously constructed
    :class:`Graph <altgraph.Graph.Graph>`.
 
    The optional *debug* level controls the amount of debug output
@@ -28,7 +28,7 @@
 
 .. method:: ObjectGraph.addNode(node)
 
-   Adds a *node* to the graph.  
+   Adds a *node* to the graph.
 
    .. note:: re-adding a node that was previously removed
       using :meth:`removeNode` will reinstate the previously
@@ -66,7 +66,7 @@
 .. method:: getIdent(node)
 
    Same as :meth:`getRawIdent`, but only if the node is part
-   of the graph. 
+   of the graph.
 
    *Node* can either be an actual node object or the graphident of
    a node.
@@ -81,7 +81,7 @@
 
 .. method:: ObjectGraph.__contains__(node)
 
-   Returns True if *node* is a member of the graph. *Node* is either an 
+   Returns True if *node* is a member of the graph. *Node* is either an
    object with a *graphident* attribute or the *graphident* attribute itself.
 
 .. method:: ObjectGraph.flatten([condition[, start]])
@@ -107,8 +107,12 @@
    Filter the ObjectGraph in-place by removing all edges to nodes that
    do not match every filter in the given filter list
 
-   Returns a tuple containing the number of: 
+   Returns a tuple containing the number of:
    (*nodes_visited*, *nodes_removed*, *nodes_orphaned*)
+
+.. method:: ObjectGraph.edgeData(fromNode, toNode):
+   Return the edge data associated with the edge from *fromNode*
+   to *toNode*.  Raises :exc:`KeyError` when no such edge exists.
 
 
 Debug output
@@ -120,7 +124,7 @@ Debug output
 
 .. method:: ObjectGraph.msg(level, text, \*args)
 
-   Print a debug message at the current indentation level when the current 
+   Print a debug message at the current indentation level when the current
    debug level is *level* or less.
 
 .. method:: ObjectGraph.msgin(level, text, \*args)
@@ -130,5 +134,5 @@ Debug output
 
 .. method:: ObjectGraph.msgout(level, text, \*args)
 
-   Decrease the indentation level and print a debug message when the 
+   Decrease the indentation level and print a debug message when the
    current debug level is *level* or less.

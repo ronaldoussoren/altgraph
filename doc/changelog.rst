@@ -4,7 +4,8 @@ Release history
 0.12
 ----
 
-- ?
+- Added ``ObjectGraph.edgeData`` to retrieve the edge data
+  from a specific edge.
 
 0.11.1
 ------
