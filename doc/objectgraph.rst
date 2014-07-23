@@ -114,6 +114,14 @@
    Return the edge data associated with the edge from *fromNode*
    to *toNode*.  Raises :exc:`KeyError` when no such edge exists.
 
+   .. versionadded: 0.12
+
+.. method:: ObjectGraph.updateEdgeData(fromNode, toNode, edgeData)
+
+   Replace the data associated with the edge from *fromNode* to
+   *toNode* by *edgeData*.
+
+   Raises :exc:`KeyError` when the edge does not exist.
 
 Debug output
 ------------

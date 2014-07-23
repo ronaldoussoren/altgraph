@@ -11,9 +11,9 @@ represents a directed graph with *N* nodes and *E* edges.
 
   Constructs a new empty :class:`Graph` object. If the optional
   *edges* parameter is supplied, updates the graph by adding the
-  specified edges. 
-  
-  All of the elements in *edges* should be tuples with two or three 
+  specified edges.
+
+  All of the elements in *edges* should be tuples with two or three
   elements. The first two elements of the tuple are the source and
   destination node of the edge, the optional third element is the
   edge data.  The source and destination nodes are added to the graph
@@ -38,7 +38,7 @@ Node related methods
 .. method:: Graph.hide_node(node)
 
    Hides a *node* from the graph. The incoming and outgoing edges of
-   the node will also be hidden. 
+   the node will also be hidden.
 
    Raises :class:`altgraph.GraphError` when the node is not (visible)
    node of the graph.
@@ -82,8 +82,8 @@ Node related methods
    Returns *node*, the node's data and the lists of outgoing
    and incoming edges for the node.
 
-   .. note:: 
-   
+   .. note::
+
       the edge lists should not be modified, doing so
       can result in unpredicatable behavior.
 
@@ -127,12 +127,12 @@ Edge related methods
 
    Adds a directed edge from *head_id* to *tail_id*. Arbitrary data can
    be added via *edge_data*.  When *create_nodes* is *True* (the default),
-   *head_id* and *tail_id* will be added to the graph when the aren't 
+   *head_id* and *tail_id* will be added to the graph when the aren't
    already present.
 
 .. method:: Graph.hide_edge(edge)
 
-   Hides an edge from the graph. The edge may be unhidden at some later 
+   Hides an edge from the graph. The edge may be unhidden at some later
    time.
 
 .. method:: Graph.restore_edge(edge)
@@ -157,6 +157,12 @@ Edge related methods
 
    Return the data associated with the *edge*.
 
+.. method:: Graph.update_edge_data(edge, data)
+
+   Replace the edge data for *edge* by *data*. Raises
+   :exc:`KeyError` when the edge does not exist.
+
+   .. versionadded:: 0.12
 
 .. method:: Graph.head(edge)
 
@@ -225,8 +231,8 @@ Graph traversal
 .. method:: Graph.iterdfs(start[, end[, forward]])
 
    Yield nodes in a depth first traversal starting at the *start*
-   node. 
-   
+   node.
+
    If *end* is specified traversal stops when reaching that node.
 
    If forward is True (the default) edges are traversed in forward
@@ -266,11 +272,11 @@ Graph traversal
    Computes the hop distance to all nodes centered around a specified node.
 
    First order neighbours are at hop 1, their neigbours are at hop 2 etc.
-   Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value of 
-   the forward parameter.  
-   
-   If the distance between all neighbouring nodes is 1 the hop number 
-   corresponds to the shortest distance between the nodes.  
+   Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value of
+   the forward parameter.
+
+   If the distance between all neighbouring nodes is 1 the hop number
+   corresponds to the shortest distance between the nodes.
 
    Typical usage::
 
@@ -292,7 +298,7 @@ Graph statistics
 
 .. method:: Graph.clust_coef(node)
 
-   Returns the local clustering coefficient of node. 
+   Returns the local clustering coefficient of node.
 
    The local cluster coefficient is the proportion of the actual number
    of edges between neighbours of node and the maximum number of

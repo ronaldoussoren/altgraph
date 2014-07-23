@@ -7,6 +7,9 @@ Release history
 - Added ``ObjectGraph.edgeData`` to retrieve the edge data
   from a specific edge.
 
+- Added ``AltGraph.update_edge_data`` and ``ObjectGraph.updateEdgeData``
+  to update the data associated with a graph edge.
+
 0.11.1
 ------
 
