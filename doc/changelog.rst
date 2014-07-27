@@ -10,11 +10,6 @@ Release history
 - Added ``AltGraph.update_edge_data`` and ``ObjectGraph.updateEdgeData``
   to update the data associated with a graph edge.
 
-0.11.1
-------
-
-- ?
-
 0.11
 ----
 
