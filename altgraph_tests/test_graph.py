@@ -306,6 +306,23 @@ class TestGraph (unittest.TestCase):
         e = subgraph.edge_by_node(4, 10)
         e = subgraph.edge_by_node(8, 10)
 
+    def test_bfs_subgraph_does_not_reverse_egde_direction(self):
+        graph = altgraph.Graph.Graph()
+        graph.add_node('A')
+        graph.add_node('B')
+        graph.add_node('C')
+        graph.add_edge('A', 'B')
+        graph.add_edge('B', 'C')
+
+        whole_graph = graph.forw_topo_sort()
+        subgraph_backward = graph.back_bfs_subgraph('C')
+        subgraph_backward = subgraph_backward.forw_topo_sort()
+        self.assertEquals(whole_graph, subgraph_backward)
+
+        subgraph_forward = graph.forw_bfs_subgraph('A')
+        subgraph_forward = subgraph_forward.forw_topo_sort()
+        self.assertEquals(whole_graph, subgraph_forward)
+
     def test_iterdfs(self):
         graph = Graph()
         graph.add_edge("1", "1.1")
