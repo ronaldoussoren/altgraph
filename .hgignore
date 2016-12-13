@@ -6,6 +6,7 @@ altgraph.egg-info
 __pycache__
 .coverage
 htmlcov
+.tox
 
 syntax: glob
 *.dSYM

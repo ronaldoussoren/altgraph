@@ -307,7 +307,7 @@ class TestGraph (unittest.TestCase):
         e = subgraph.edge_by_node(8, 10)
 
     def test_bfs_subgraph_does_not_reverse_egde_direction(self):
-        graph = altgraph.Graph.Graph()
+        graph = Graph()
         graph.add_node('A')
         graph.add_node('B')
         graph.add_node('C')
