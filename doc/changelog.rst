@@ -4,12 +4,10 @@ Release history
 0.13
 ----
 
-- ?
+- Issue #4: Graph._bfs_subgraph and back_bfs_subgraph return subgraphs with reversed edges
 
-0.12.1
-------
+  Fix by "pombredanne" on bitbucket.
 
-- ?
 
 0.12
 ----
