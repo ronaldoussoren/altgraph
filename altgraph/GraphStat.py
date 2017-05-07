@@ -2,15 +2,15 @@
 altgraph.GraphStat - Functions providing various graph statistics
 =================================================================
 '''
-import sys
 
-def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
+
+def degree_dist(graph, limits=(0, 0), bin_num=10, mode='out'):
     '''
     Computes the degree distribution for a graph.
 
-    Returns a list of tuples where the first element of the tuple is the center of the bin
-    representing a range of degrees and the second element of the tuple are the number of nodes
-    with the degree falling in the range.
+    Returns a list of tuples where the first element of the tuple is the
+    center of the bin representing a range of degrees and the second element
+    of the tuple are the number of nodes with the degree falling in the range.
 
     Example::
 
@@ -24,7 +24,7 @@ def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
         get_deg = graph.out_degree
 
     for node in graph:
-        deg.append( get_deg(node) )
+        deg.append(get_deg(node))
 
     if not deg:
         return []
@@ -33,14 +33,17 @@ def degree_dist(graph, limits=(0,0), bin_num=10, mode='out'):
 
     return results
 
+
 _EPS = 1.0/(2.0**32)
-def _binning(values, limits=(0,0), bin_num=10):
+
+
+def _binning(values, limits=(0, 0), bin_num=10):
     '''
     Bins data that falls between certain limits, if the limits are (0, 0) the
     minimum and maximum values are used.
 
-    Returns a list of tuples where the first element of the tuple is the center of the bin
-    and the second element of the tuple are the counts.
+    Returns a list of tuples where the first element of the tuple is the
+    center of the bin and the second element of the tuple are the counts.
     '''
     if limits == (0, 0):
         min_val, max_val = min(values) - _EPS, max(values) + _EPS
@@ -68,6 +71,6 @@ def _binning(values, limits=(0,0), bin_num=10):
     center = (bin_size/2) + min_val
     for i, y in enumerate(bins):
         x = center + bin_size * i
-        result.append( (x,y) )
+        result.append((x, y))
 
     return result

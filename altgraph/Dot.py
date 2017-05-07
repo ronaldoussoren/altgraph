@@ -3,14 +3,17 @@ altgraph.Dot - Interface to the dot language
 ============================================
 
 The :py:mod:`~altgraph.Dot` module provides a simple interface to the
-file format used in the `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
+file format used in the
+`graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
 program. The module is intended to offload the most tedious part of the process
-(the **dot** file generation) while transparently exposing most of its features.
+(the **dot** file generation) while transparently exposing most of its
+features.
 
-To display the graphs or to generate image files the `graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
-package needs to be installed on the system, moreover the :command:`dot` and :command:`dotty` programs must
-be accesible in the program path so that they can be ran from processes spawned
-within the module.
+To display the graphs or to generate image files the
+`graphviz <http://www.research.att.com/sw/tools/graphviz/>`_
+package needs to be installed on the system, moreover the :command:`dot` and
+:command:`dotty` programs must be accesible in the program path so that they
+can be ran from processes spawned within the module.
 
 Example usage
 -------------
@@ -94,13 +97,16 @@ Valid attributes
     - edge attributes, passed via the :py:meth:`Dot.edge_style` method::
 
         style     = 'dashed' | 'dotted' | 'solid' | 'invis' | 'bold'
-        arrowhead = 'box' | 'crow' | 'diamond' | 'dot' | 'inv' | 'none' | 'tee' | 'vee'
+        arrowhead = 'box' | 'crow' | 'diamond' | 'dot' | 'inv' | 'none'
+            | 'tee' | 'vee'
         weight    = number (the larger the number the closer the nodes will be)
 
-    - valid `graphviz colors <http://www.research.att.com/~erg/graphviz/info/colors.html>`_
+    - valid `graphviz colors
+        <http://www.research.att.com/~erg/graphviz/info/colors.html>`_
 
     - for more details on how to control the graph drawing process see the
-      `graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
+      `graphviz reference
+        <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
 '''
 import os
 import warnings
@@ -114,11 +120,14 @@ class Dot(object):
     allowing a fine grained control over how the graph is being
     displayed.
 
-    If the :command:`dot` and :command:`dotty` programs are not in the current system path
-    their location needs to be specified in the contructor.
+    If the :command:`dot` and :command:`dotty` programs are not in the current
+    system path their location needs to be specified in the contructor.
     '''
 
-    def __init__(self, graph=None, nodes=None, edgefn=None, nodevisitor=None, edgevisitor=None, name="G", dot='dot', dotty='dotty', neato='neato', graphtype="digraph"):
+    def __init__(
+            self, graph=None, nodes=None, edgefn=None, nodevisitor=None,
+            edgevisitor=None, name="G", dot='dot', dotty='dotty',
+            neato='neato', graphtype="digraph"):
         '''
         Initialization.
         '''
@@ -178,9 +187,10 @@ class Dot(object):
         Displays the current graph via dotty
         '''
 
-        if  mode == 'neato':
+        if mode == 'neato':
             self.save_dot(self.temp_neo)
-            neato_cmd = "%s -o %s %s" % (self.neato, self.temp_dot, self.temp_neo)
+            neato_cmd = "%s -o %s %s" % (
+                self.neato, self.temp_dot, self.temp_neo)
             os.system(neato_cmd)
         else:
             self.save_dot(self.temp_dot)
@@ -212,10 +222,10 @@ class Dot(object):
 
         try:
             if tail not in self.edges[head]:
-                self.edges[head][tail]= {}
+                self.edges[head][tail] = {}
             self.edges[head][tail] = kwargs
         except KeyError:
-            raise GraphError("invalid edge  %s -> %s " % (head, tail) )
+            raise GraphError("invalid edge  %s -> %s " % (head, tail))
 
     def iterdot(self):
         # write graph title
@@ -233,8 +243,8 @@ class Dot(object):
         yield '\n'
 
         # some reusable patterns
-        cpatt  = '%s="%s",'      # to separate attributes
-        epatt  = '];\n'          # to end attributes
+        cpatt = '%s="%s",'      # to separate attributes
+        epatt = '];\n'          # to end attributes
 
         # write node attributes
         for node_name, node_attr in sorted(self.nodes.items()):
@@ -250,7 +260,8 @@ class Dot(object):
                     yield '\t"%s" -> "%s" [' % (head, tail)
                 else:
                     yield '\t"%s" -- "%s" [' % (head, tail)
-                for attr_name, attr_value in sorted(self.edges[head][tail].items()):
+                for attr_name, attr_value in \
+                        sorted(self.edges[head][tail].items()):
                     yield cpatt % (attr_name, attr_value)
                 yield epatt
 
@@ -269,12 +280,9 @@ class Dot(object):
             warnings.warn(DeprecationWarning, "always pass a file_name")
             file_name = self.temp_dot
 
-        fp   = open(file_name, "w")
-        try:
+        with open(file_name, "w") as fp:
             for chunk in self.iterdot():
                 fp.write(chunk)
-        finally:
-            fp.close()
 
     def save_img(self, file_name=None, file_type="gif", mode='dot'):
         '''
@@ -285,15 +293,17 @@ class Dot(object):
             warnings.warn(DeprecationWarning, "always pass a file_name")
             file_name = "out"
 
-        if  mode == 'neato':
+        if mode == 'neato':
             self.save_dot(self.temp_neo)
-            neato_cmd = "%s -o %s %s" % (self.neato, self.temp_dot, self.temp_neo)
+            neato_cmd = "%s -o %s %s" % (
+                self.neato, self.temp_dot, self.temp_neo)
             os.system(neato_cmd)
             plot_cmd = self.dot
         else:
             self.save_dot(self.temp_dot)
             plot_cmd = self.dot
 
-        file_name  = "%s.%s" % (file_name, file_type)
-        create_cmd = "%s -T%s %s -o %s" % (plot_cmd, file_type, self.temp_dot, file_name)
+        file_name = "%s.%s" % (file_name, file_type)
+        create_cmd = "%s -T%s %s -o %s" % (
+            plot_cmd, file_type, self.temp_dot, file_name)
         os.system(create_cmd)

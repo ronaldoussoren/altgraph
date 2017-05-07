@@ -16,6 +16,7 @@ altgraph.Graph - Base Graph class
 from altgraph import GraphError
 from collections import deque
 
+
 class Graph(object):
     """
     The Graph class represents a directed graph with *N* nodes and *E* edges.
@@ -32,8 +33,8 @@ class Graph(object):
     - the prefixes such as *forw* and *back* will refer to the
       orientation of the edges used in the method with respect to the node.
 
-      For example: :py:meth:`forw_bfs` will start at the node then use the outgoing
-      edges to traverse the graph (goes forward).
+      For example: :py:meth:`forw_bfs` will start at the node then use the
+      outgoing edges to traverse the graph (goes forward).
     """
 
     def __init__(self, edges=None):
@@ -54,8 +55,7 @@ class Graph(object):
                     head, tail, data = item
                     self.add_edge(head, tail, data)
                 else:
-                    raise GraphError("Cannot create edge from %s"%(item,))
-
+                    raise GraphError("Cannot create edge from %s" % (item,))
 
     def __repr__(self):
         return '<Graph: %d nodes, %d edges>' % (
@@ -92,7 +92,8 @@ class Graph(object):
         :param head_id: head node
         :param tail_id: tail node
         :param edge_data: (optional) data attached to the edge
-        :param create_nodes: (optional) creates the head_id or tail_id node in case they did not exist
+        :param create_nodes: (optional) creates the head_id or tail_id
+            node in case they did not exist
         """
         # shorcut
         edge = self.next_edge
@@ -115,7 +116,6 @@ class Graph(object):
         # store edge information
         self.edges[edge] = (head_id, tail_id, edge_data)
 
-
         self.next_edge += 1
 
     def hide_edge(self, edge):
@@ -124,7 +124,8 @@ class Graph(object):
         time.
         """
         try:
-            head_id, tail_id, edge_data = self.hidden_edges[edge] = self.edges[edge]
+            head_id, tail_id, edge_data = \
+                self.hidden_edges[edge] = self.edges[edge]
             self.nodes[tail_id][0].remove(edge)
             self.nodes[head_id][1].remove(edge)
             del self.edges[edge]
@@ -199,7 +200,7 @@ class Graph(object):
         Returns the edge that connects the head_id and tail_id nodes
         """
         try:
-            head, tail, data =  self.edges[edge]
+            head, tail, data = self.edges[edge]
         except KeyError:
             head, tail = None, None
             raise GraphError('Invalid edge %s' % edge)
@@ -331,7 +332,7 @@ class Graph(object):
         """
         List of nodes connected by incoming and outgoing edges
         """
-        l = dict.fromkeys( self.inc_nbrs(node) + self.out_nbrs(node) )
+        l = dict.fromkeys(self.inc_nbrs(node) + self.out_nbrs(node))
         return list(l)
 
     def out_edges(self, node):
@@ -453,10 +454,10 @@ class Graph(object):
         traversal.
         """
         if forward:
-            get_bfs  = self.forw_bfs
+            get_bfs = self.forw_bfs
             get_nbrs = self.out_nbrs
         else:
-            get_bfs  = self.back_bfs
+            get_bfs = self.back_bfs
             get_nbrs = self.inc_nbrs
 
         g = Graph()
@@ -574,7 +575,6 @@ class Graph(object):
                     visited.add(tail)
                     queue.append((tail, curr_step + 1))
 
-
     def forw_bfs(self, start, end=None):
         """
         Returns a list of nodes in some forward BFS order.
@@ -591,7 +591,7 @@ class Graph(object):
         Starting from the start node the breadth first search proceeds along
         incoming edges.
         """
-        return [node for node, step in self._iterbfs(start, end, forward=False)]
+        return [node for node, _ in self._iterbfs(start, end, forward=False)]
 
     def forw_dfs(self, start, end=None):
         """
@@ -613,8 +613,8 @@ class Graph(object):
 
     def connected(self):
         """
-        Returns :py:data:`True` if the graph's every node can be reached from every
-        other node.
+        Returns :py:data:`True` if the graph's every node can be reached from
+        every other node.
         """
         node_list = self.node_list()
         for node in node_list:
@@ -625,23 +625,26 @@ class Graph(object):
 
     def clust_coef(self, node):
         """
-        Computes and returns the local clustering coefficient of node.  The
-        local cluster coefficient is proportion of the actual number of edges between
-        neighbours of node and the maximum number of edges between those neighbours.
+        Computes and returns the local clustering coefficient of node.
 
-        See <http://en.wikipedia.org/wiki/Clustering_coefficient#Local_clustering_coefficient>
+        The local cluster coefficient is proportion of the actual number of
+        edges between neighbours of node and the maximum number of edges
+        between those neighbours.
+
+        See "Local Clustering Coefficient" on
+        <http://en.wikipedia.org/wiki/Clustering_coefficient>
         for a formal definition.
         """
         num = 0
         nbr_set = set(self.out_nbrs(node))
 
         if node in nbr_set:
-            nbr_set.remove(node) # loop defense
+            nbr_set.remove(node)  # loop defense
 
         for nbr in nbr_set:
             sec_set = set(self.out_nbrs(nbr))
             if nbr in sec_set:
-                sec_set.remove(nbr) # loop defense
+                sec_set.remove(nbr)  # loop defense
             num += len(nbr_set & sec_set)
 
         nbr_num = len(nbr_set)
@@ -653,17 +656,21 @@ class Graph(object):
 
     def get_hops(self, start, end=None, forward=True):
         """
-        Computes the hop distance to all nodes centered around a specified node.
+        Computes the hop distance to all nodes centered around a node.
 
         First order neighbours are at hop 1, their neigbours are at hop 2 etc.
-        Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value of the forward
-        parameter.  If the distance between all neighbouring nodes is 1 the hop
-        number corresponds to the shortest distance between the nodes.
+        Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value
+        of the forward parameter.  If the distance between all neighbouring
+        nodes is 1 the hop number corresponds to the shortest distance between
+        the nodes.
 
         :param start: the starting node
-        :param end: ending node (optional). When not specified will search the whole graph.
-        :param forward: directionality parameter (optional). If C{True} (default) it uses L{forw_bfs} otherwise L{back_bfs}.
-        :return: returns a list of tuples where each tuple contains the node and the hop.
+        :param end: ending node (optional). When not specified will search the
+            whole graph.
+        :param forward: directionality parameter (optional).
+            If C{True} (default) it uses L{forw_bfs} otherwise L{back_bfs}.
+        :return: returns a list of tuples where each tuple contains the
+            node and the hop.
 
         Typical usage::
 

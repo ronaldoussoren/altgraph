@@ -10,6 +10,7 @@ from altgraph import GraphError
 from altgraph.Graph import Graph
 from altgraph.GraphUtil import filter_stack
 
+
 class ObjectGraph(object):
     """
     A graph of objects that have a "graphident" attribute.
@@ -43,10 +44,10 @@ class ObjectGraph(object):
             if node is not None:
                 yield self.graph.node_data(ident)
 
-
     def get_edges(self, node):
         start = self.getRawIdent(node)
         _, _, outraw, incraw = self.graph.describe_node(start)
+
         def iter_edges(lst, n):
             seen = set()
             for tpl in (self.graph.describe_edge(e) for e in lst):
@@ -73,7 +74,8 @@ class ObjectGraph(object):
         Filter the ObjectGraph in-place by removing all edges to nodes that
         do not match every filter in the given filter list
 
-        Returns a tuple containing the number of: (nodes_visited, nodes_removed, nodes_orphaned)
+        Returns a tuple containing the number of:
+            (nodes_visited, nodes_removed, nodes_orphaned)
         """
         visited, removes, orphans = filter_stack(self.graph, self, filters)
 
@@ -183,7 +185,8 @@ class ObjectGraph(object):
         Print a debug message with the given level
         """
         if s and level <= self.debug:
-            print ("%s%s %s" % ("  " * self.indent, s, ' '.join(map(repr, args))))
+            print("%s%s %s" % (
+                "  " * self.indent, s, ' '.join(map(repr, args))))
 
     def msgin(self, level, s, *args):
         """
