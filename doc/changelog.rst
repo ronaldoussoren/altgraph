@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.14
+----
+
+- Issue #7: Remove use of ``iteritems`` in altgraph.GraphAlgo code
+
 0.13
 ----
 
