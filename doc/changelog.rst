@@ -1,6 +1,13 @@
 Release history
 ===============
 
+0.15
+----
+
+* ``ObjectGraph.get_edges``, ``ObjectGraph.getEdgeData`` and ``ObjectGraph.updateEdgeData``
+  accept *None* as the node to get and treat this as an alias for *self* (as other
+  methods already did).
+
 0.14
 ----
 

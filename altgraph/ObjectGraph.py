@@ -45,6 +45,8 @@ class ObjectGraph(object):
                 yield self.graph.node_data(ident)
 
     def get_edges(self, node):
+        if node is None:
+            node = self
         start = self.getRawIdent(node)
         _, _, outraw, incraw = self.graph.describe_node(start)
 
@@ -58,12 +60,16 @@ class ObjectGraph(object):
         return iter_edges(outraw, 3), iter_edges(incraw, 2)
 
     def edgeData(self, fromNode, toNode):
+        if fromNode is None:
+            fromNode = self
         start = self.getRawIdent(fromNode)
         stop = self.getRawIdent(toNode)
         edge = self.graph.edge_by_node(start, stop)
         return self.graph.edge_data(edge)
 
     def updateEdgeData(self, fromNode, toNode, edgeData):
+        if fromNode is None:
+            fromNode = self
         start = self.getRawIdent(fromNode)
         stop = self.getRawIdent(toNode)
         edge = self.graph.edge_by_node(start, stop)

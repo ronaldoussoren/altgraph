@@ -90,6 +90,13 @@ class TestObjectGraph (unittest.TestCase):
         graph.addNode(n3)
         self.assertTrue(n3 in graph)
 
+        nx = Node("nx")
+        self.assertFalse(nx in graph)
+        graph.removeNode("nx")
+        self.assertFalse(nx in graph)
+
+        self.assertIs(graph.getIdent("nx"), None)
+
         n = graph.createNode(SubNode, "n1")
         self.assertTrue(n is n1)
 
@@ -144,6 +151,8 @@ class TestObjectGraph (unittest.TestCase):
         e = g.edge_by_node("n1", "n2")
         self.assertTrue(e is not None)
         self.assertEqual(g.edge_data(e), "foo")
+
+        graph.removeReference("A", "B") # neither node exists, shouldn't fail
 
 
     def test_flatten(self):
@@ -241,6 +250,7 @@ class TestObjectGraph (unittest.TestCase):
         graph.createReference(n2, n4)
         graph.createReference(n2, n5)
         graph.createReference(n6, n2)
+        graph.createReference(n6, n2)
 
         outs, ins = graph.get_edges(n1)
 
@@ -264,6 +274,29 @@ class TestObjectGraph (unittest.TestCase):
         self.assertTrue(n4 not in ins)
         self.assertTrue(n5 in ins)
         self.assertTrue(n6 not in ins)
+
+        outs, ins = graph.get_edges(n6)
+        outs = list(outs)
+        ints = list(ins)
+
+        self.assertEqual(outs.count(n2), 1)
+
+    def test_edge_data(self):
+        graph = ObjectGraph()
+        n1 = graph.createNode(ArgNode, "n1", 1)
+        n2 = graph.createNode(ArgNode, "n2", 2)
+        n3 = graph.createNode(ArgNode, "n3", 3)
+
+        graph.createReference(n1, n2)
+        graph.createReference(n1, n3, 'foo')
+
+        self.assertIs(graph.edgeData(n1, n2), None)
+        self.assertIs(graph.edgeData(n1, n3), 'foo')
+
+        graph.updateEdgeData(n1, n2, 'bar')
+        self.assertIs(graph.edgeData(n1, n2), 'bar')
+
+
 
     def test_filterStack(self):
         graph = ObjectGraph()
@@ -343,6 +376,67 @@ class TestObjectGraphIO (unittest.TestCase):
         graph.msg(0, "test me")
         graph.msgout(0, "bye bye")
         self.assertEqual(fp.getvalue(), "hello 'world'\n  test me \nbye bye \n")
+
+
+        sys.stdout = fp = StringIO()
+        graph.msgin(55, 'hello')
+        graph.msgout(55, 'bye')
+        self.assertEqual(fp.getvalue(), "")
+
+
+    def test_graph_references(self):
+        graph = ObjectGraph()
+        n1 = graph.createNode(Node, "n1")
+        n2 = graph.createNode(Node, "n2")
+
+        graph.createReference(None, n1, None)
+        graph.createReference(None, n2, "hello")
+
+        self.assertEqual(graph.edgeData(None, n1), None)
+        self.assertEqual(graph.edgeData(None, n2), "hello")
+
+        graph.updateEdgeData(None, n1, "world")
+        self.assertEqual(graph.edgeData(None, n1), "world")
+
+        out, inc = graph.get_edges(None)
+        out = list(out)
+        inc = list(inc)
+
+        self.assertEqual(out, [n1, n2])
+        self.assertEqual(len(out), 2)
+        self.assertTrue(n1 in out)
+        self.assertTrue(n2 in out)
+        self.assertEqual(inc, [])
+
+        graph.removeReference(None, n2)
+        out, inc = graph.get_edges(None)
+        out = list(out)
+        inc = list(inc)
+
+        self.assertTrue(n2 not in out)
+
+    def test_reference_oddity(self):
+        # Not sure if I actually like this, cannot change for now...
+        graph = ObjectGraph()
+        n1 = graph.createNode(Node, "n1")
+        n2 = graph.createNode(Node, "n2")
+
+        graph.createReference("n1", "n2")
+        graph.createReference("n1", "n3")
+        graph.createReference("n3", "n1")
+
+        nodes = list(graph.nodes())
+        self.assertEqual(len(nodes), 2)
+        self.assertTrue(n1 in nodes)
+        self.assertTrue(n2 in nodes)
+
+        out, inc = graph.get_edges(n1)
+        out = list(out)
+        inc = list(inc)
+
+        self.assertEqual(out, [n2])
+        self.assertEqual(inc, [])
+
 
 
 if __name__ == "__main__": # pragma: no cover
