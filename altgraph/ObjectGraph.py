@@ -16,6 +16,7 @@ class ObjectGraph(object):
     A graph of objects that have a "graphident" attribute.
     graphident is the key for the object in the graph
     """
+
     def __init__(self, graph=None, debug=0):
         if graph is None:
             graph = Graph()
