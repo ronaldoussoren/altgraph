@@ -4,5 +4,3 @@ graphviz output.
 
 altgraph includes some additional usage of Python 2.6+ features and
 enhancements related to modulegraph and macholib.
-
-[![Build status](https://ci.appveyor.com/api/projects/status/k2pohmb5a3t9q847?svg=true)](https://ci.appveyor.com/project/RonaldOussoren/modulegraph)
