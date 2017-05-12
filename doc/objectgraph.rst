@@ -100,7 +100,7 @@
 .. method:: ObjectGraph.get_edges(node)
 
    Returns two iterators that yield the nodes reaching by
-   outgoing and incoming edges.
+   outgoing and incoming edges for *node*.
 
 .. method:: ObjectGraph.filterStack(filters)
 
