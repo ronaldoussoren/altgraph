@@ -66,5 +66,12 @@ class TestBinning (unittest.TestCase):
 
         self.assertEqual(result, out)
 
+        # Binning (100, 0] into 10 bins
+        a = list(range(99, -10, -1))
+        out = GraphStat._binning(a, limits=(0, 100), bin_num=10)
+
+        self.assertEqual(out,
+                [ (x*1.0, 10) for x in range(5, 100, 10) ])
+
 if __name__ == "__main__": # pragma: no cover
     unittest.main()

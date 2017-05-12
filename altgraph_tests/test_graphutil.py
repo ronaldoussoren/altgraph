@@ -102,6 +102,7 @@ class TestGraphUtil (unittest.TestCase):
         g.add_edge("1.1.2", "1.1.2.1")
         g.add_edge("1.1.2", "1.1.2.2")
         g.add_edge("1.1.2", "1.1.2.3")
+        g.add_edge("1.1.2", "1.1.1.2")
 
         v, r, o =  GraphUtil.filter_stack(g, "1", [
             lambda n: n != "N.1.1.1", lambda n: n != "N.1.1.2.3" ])

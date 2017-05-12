@@ -344,8 +344,6 @@ class Graph(object):
         except KeyError:
             raise GraphError('Invalid node %s' % node)
 
-        return None
-
     def inc_edges(self, node):
         """
         Returns a list of the incoming edges
@@ -354,8 +352,6 @@ class Graph(object):
             return list(self.nodes[node][0])
         except KeyError:
             raise GraphError('Invalid node %s' % node)
-
-        return None
 
     def all_edges(self, node):
         """

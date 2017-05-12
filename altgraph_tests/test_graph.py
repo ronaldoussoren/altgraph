@@ -81,11 +81,13 @@ class TestGraph (unittest.TestCase):
 
         self.assertEqual(graph.number_of_hidden_edges(), 0)
         self.assertEqual(graph.number_of_edges(), 2)
+        self.assertEqual(graph.hidden_edge_list(), [])
         e = graph.edge_by_node(1, 2)
         self.assertTrue(isinstance(e, int))
         graph.hide_edge(e)
         self.assertEqual(graph.number_of_hidden_edges(), 1)
         self.assertEqual(graph.number_of_edges(), 1)
+        self.assertEqual(graph.hidden_edge_list(), [e])
         e2 = graph.edge_by_node(1, 2)
         self.assertTrue(e2 is None)
 
@@ -164,7 +166,11 @@ class TestGraph (unittest.TestCase):
         e2 = graph.edge_by_node(1, 2)
         self.assertEqual(e1, e2)
 
+        self.assertRaises(GraphError, graph.hide_edge, 'foo')
+        self.assertRaises(GraphError, graph.hide_node, 'foo')
+        self.assertRaises(GraphError, graph.inc_edges, 'foo')
 
+        self.assertEqual(repr(graph), '<Graph: 5 nodes, 6 edges>')
 
     def test_toposort(self):
         graph = Graph()
@@ -317,11 +323,11 @@ class TestGraph (unittest.TestCase):
         whole_graph = graph.forw_topo_sort()
         subgraph_backward = graph.back_bfs_subgraph('C')
         subgraph_backward = subgraph_backward.forw_topo_sort()
-        self.assertEquals(whole_graph, subgraph_backward)
+        self.assertEqual(whole_graph, subgraph_backward)
 
         subgraph_forward = graph.forw_bfs_subgraph('A')
         subgraph_forward = subgraph_forward.forw_topo_sort()
-        self.assertEquals(whole_graph, subgraph_forward)
+        self.assertEqual(whole_graph, subgraph_forward)
 
     def test_iterdfs(self):
         graph = Graph()
@@ -589,6 +595,16 @@ class TestGraph (unittest.TestCase):
         g.add_edge(4, 2)
         g.add_edge(4, 3)
         self.assertEqual(g.clust_coef(1), 1)
+
+        g.add_edge(1, 1)
+        self.assertEqual(g.clust_coef(1), 1)
+
+        g.add_edge(2, 2)
+        self.assertEqual(g.clust_coef(1), 1)
+
+        g.add_edge(99, 99)
+        self.assertEqual(g.clust_coef(99), 0.0)
+
 
 
     def test_get_hops(self):
