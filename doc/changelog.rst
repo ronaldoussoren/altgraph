@@ -1,11 +1,6 @@
 Release history
 ===============
 
-0.15.1
-------
-
-* No functional changes. This release only updates documentation and PyPI metadata.
-
 0.15
 ----
 
