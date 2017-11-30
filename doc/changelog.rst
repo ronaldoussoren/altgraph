@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.16
+----
+
+* Add LICENSE file
+
 0.15
 ----
 
