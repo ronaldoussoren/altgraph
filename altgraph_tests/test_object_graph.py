@@ -243,6 +243,7 @@ class TestObjectGraph (unittest.TestCase):
         n5 = graph.createNode(ArgNode, "n5", 5)
         n6 = graph.createNode(ArgNode, "n6", 5)
 
+        graph.createReference(None, n1)
         graph.createReference(n1, n2)
         graph.createReference(n1, n3)
         graph.createReference(n3, n1)
@@ -251,6 +252,7 @@ class TestObjectGraph (unittest.TestCase):
         graph.createReference(n2, n5)
         graph.createReference(n6, n2)
         graph.createReference(n6, n2)
+        graph.createReference(n6, n6)
 
         outs, ins = graph.get_edges(n1)
 
@@ -260,7 +262,7 @@ class TestObjectGraph (unittest.TestCase):
         ins = list(ins)
         outs = list(outs)
 
-
+        self.assertTrue(None not in outs)
         self.assertTrue(n1 not in outs)
         self.assertTrue(n2 in outs)
         self.assertTrue(n3 in outs)
@@ -268,6 +270,7 @@ class TestObjectGraph (unittest.TestCase):
         self.assertTrue(n5 not in outs)
         self.assertTrue(n6 not in outs)
 
+        self.assertTrue(None in ins)
         self.assertTrue(n1 not in ins)
         self.assertTrue(n2 not in ins)
         self.assertTrue(n3 in ins)
@@ -280,6 +283,9 @@ class TestObjectGraph (unittest.TestCase):
         ints = list(ins)
 
         self.assertEqual(outs.count(n2), 1)
+
+        self.assertTrue(None not in outs)
+        self.assertTrue(None not in ins)
 
     def test_edge_data(self):
         graph = ObjectGraph()

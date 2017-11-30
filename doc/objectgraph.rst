@@ -52,7 +52,8 @@
    *edge_data* is associated with the edge.
 
    *Fromnode* and *tonode* can either be node objects or the graphident
-   values for nodes.
+   values for nodes. When *fromnode* is :data:`None` *tonode* is a root
+   for the graph.
 
 .. method:: removeReference(fromnode, tonode)
 
@@ -100,7 +101,11 @@
 .. method:: ObjectGraph.get_edges(node)
 
    Returns two iterators that yield the nodes reaching by
-   outgoing and incoming edges for *node*.
+   outgoing and incoming edges for *node*. Note that the
+   iterator for incoming edgets can yield :data:`None` when the
+   *node* is a root of the graph.
+
+   Use :data:`None` for *node* to fetch the roots of the graph.
 
 .. method:: ObjectGraph.filterStack(filters)
 
