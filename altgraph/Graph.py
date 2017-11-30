@@ -318,22 +318,19 @@ class Graph(object):
         """
         List of nodes connected by outgoing edges
         """
-        l = [self.tail(n) for n in self.out_edges(node)]
-        return l
+        return [self.tail(n) for n in self.out_edges(node)]
 
     def inc_nbrs(self, node):
         """
         List of nodes connected by incoming edges
         """
-        l = [self.head(n) for n in self.inc_edges(node)]
-        return l
+        return [self.head(n) for n in self.inc_edges(node)]
 
     def all_nbrs(self, node):
         """
         List of nodes connected by incoming and outgoing edges
         """
-        l = dict.fromkeys(self.inc_nbrs(node) + self.out_nbrs(node))
-        return list(l)
+        return list(dict.fromkeys(self.inc_nbrs(node) + self.out_nbrs(node)))
 
     def out_edges(self, node):
         """
