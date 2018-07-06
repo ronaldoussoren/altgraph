@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.16.1
+------
+
+Explicitly mark Python 3.7 as supported in wheel metadata.
+
 0.16
 ----
 
