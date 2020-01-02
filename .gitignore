@@ -13,3 +13,4 @@ syntax: glob
 *.pyc
 *.pyo
 *.swp
+.coverage*
