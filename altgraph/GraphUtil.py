@@ -56,7 +56,7 @@ def generate_scale_free_graph(
         steps, growth_num, self_loops=False, multi_edges=False):
     '''
     Generates and returns a :py:class:`~altgraph.Graph.Graph` instance that
-    will have *steps* \* *growth_num* nodes and a scale free (powerlaw)
+    will have *steps* \\* *growth_num* nodes and a scale free (powerlaw)
     connectivity. Starting with a fully connected graph with *growth_num*
     nodes at every step *growth_num* nodes are added to the graph and are
     connected to existing nodes with a probability proportional to the degree
