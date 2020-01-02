@@ -8,7 +8,7 @@
 
    Dijkstra's algorithm for shortest paths.
 
-   Find shortest paths from the  start node to all nodes nearer 
+   Find shortest paths from the  start node to all nodes nearer
    than or equal to the *end* node. The edge data is assumed to be the edge length.
 
    .. note::
@@ -22,5 +22,5 @@
 .. function:: shortest_path(graph, start, end)
 
    Find a single shortest path from the given start node to the given end node.
-   The input has the same conventions as :func:`dijkstra`. The output is a list 
+   The input has the same conventions as :func:`dijkstra`. The output is a list
    of the nodes in order along the shortest path.

@@ -1,10 +1,19 @@
 Release history
 ===============
 
+0.17
+----
+
+* Explicitly mark Python 3.8 as supported in wheel metadata.
+
+* Migrate from Bitbucket to GitHub
+
+* Run black on the entire repository
+
 0.16.1
 ------
 
-Explicitly mark Python 3.7 as supported in wheel metadata.
+* Explicitly mark Python 3.7 as supported in wheel metadata.
 
 0.16
 ----

@@ -5,8 +5,8 @@
    :synopsis: Interface to the dot language as used by Graphviz..
 
 The :py:mod:`~altgraph.Dot` module provides a simple interface to the
-file format used in the `graphviz`_ program. The module is intended to 
-offload the most tedious part of the process (the **dot** file generation) 
+file format used in the `graphviz`_ program. The module is intended to
+offload the most tedious part of the process (the **dot** file generation)
 while transparently exposing most of its features.
 
 .. _`graphviz`: <http://www.research.att.com/sw/tools/graphviz/>`_
@@ -14,7 +14,7 @@ while transparently exposing most of its features.
 To display the graphs or to generate image files the `graphviz`_
 package needs to be installed on the system, moreover the :command:`dot` and :command:`dotty` programs must
 be accesible in the program path so that they can be ran from processes spawned
-within the module. 
+within the module.
 
 Example usage
 -------------
@@ -26,7 +26,7 @@ Here is a typical usage::
     # create a graph
     edges = [ (1,2), (1,3), (3,4), (3,5), (4,5), (5,4) ]
     graph = Graph.Graph(edges)
-    
+
     # create a dot representation of the graph
     dot = Dot.Dot(graph)
 
@@ -77,10 +77,10 @@ Example::
     dot.edge_style(4, 5, arrowsize=2, style='bold')
 
 
-    .. note:: 
-       
+    .. note::
+
        dotty (invoked via :py:func:`~altgraph.Dot.display`) may not be able to
-       display all graphics styles. To verify the output save it to an image 
+       display all graphics styles. To verify the output save it to an image
        file and look at it that way.
 
 Valid attributes
@@ -104,7 +104,7 @@ Valid attributes
 
 - valid `graphviz colors <http://www.research.att.com/~erg/graphviz/info/colors.html>`_
 
-- for more details on how to control the graph drawing process see the 
+- for more details on how to control the graph drawing process see the
   `graphviz reference <http://www.research.att.com/sw/tools/graphviz/refs.html>`_.
 
 
@@ -113,15 +113,15 @@ Class interface
 
 .. class:: Dot(graph[, nodes[, edgefn[, nodevisitor[, edgevisitor[, name[, dot[, dotty[, neato[, graphtype]]]]]]]]])
 
-  Creates a new Dot generator based on the specified 
+  Creates a new Dot generator based on the specified
   :class:`Graph <altgraph.Graph.Graph>`.  The Dot generator won't reference
   the *graph* once it is constructed.
 
   If the *nodes* argument is present it is the list of nodes to include
   in the graph, otherwise all nodes in *graph* are included.
-  
+
   If the *edgefn* argument is present it is a function that yields the
-  nodes connected to another node, this defaults to 
+  nodes connected to another node, this defaults to
   :meth:`graph.out_nbr <altgraph.Graph.Graph.out_nbr>`. The constructor won't
   add edges to the dot file unless both the head and tail of the edge
   are in *nodes*.
@@ -133,7 +133,7 @@ Class interface
   for a given edge or node (both default to functions that return an empty
   style).
 
-  The arguments *dot*, *dotty* and *neato* are used to pass the path to 
+  The arguments *dot*, *dotty* and *neato* are used to pass the path to
   the corresponding `graphviz`_ command.
 
 
@@ -150,7 +150,7 @@ Updating graph attributes
 
    Sets the style for *node* to the given attributes.
 
-   This method will add *node* to the graph when it isn't already 
+   This method will add *node* to the graph when it isn't already
    present.
 
    See `Valid Attributes`_ for more information about the attributes.
