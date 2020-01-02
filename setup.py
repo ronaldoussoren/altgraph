@@ -750,7 +750,8 @@ class my_egg_info (egg_info.egg_info):
         path = os.path.join(self.egg_info, 'PKG-INFO')
         with open(path, 'a+') as fp:
             fp.write('Project-URL: Documentation, https://altgraph.readthedocs.io/en/latest/\n')
-            fp.write('Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/altgraph/issues?status=new&status=open\n')
+            fp.write('Project-URL: Issue tracker, https://github.com/ronaldoussoren/altgraph/issues\n')
+            fp.write('Project-URL: Repository, https://github.com/ronaldoussoren/altgraph\n')
 
 
 class my_test (Command):
