@@ -28,9 +28,9 @@ The primary users of this package are `macholib <http://pypi.python.org/pypi/mac
 Online Resources
 ----------------
 
-* `Sourcecode repository on bitbucket <http://bitbucket.org/ronaldoussoren/altgraph/>`_
+* `Sourcecode repository on GitHub <https://github.com/ronaldoussoren/altgraph/>`_
 
-* `The issue tracker <http://bitbucket.org/ronaldoussoren/altgraph/issues>`_
+* `The issue tracker <https://github.com/ronaldoussoren/altgraph/issues>`_
 
 Indices and tables
 ------------------

@@ -10,6 +10,6 @@ Project links
 
 * `Documentation <https://altgraph.readthedocs.io/en/latest/>`_
 
-* `Issue Tracker <https://bitbucket.org/ronaldoussoren/altgraph/issues?status=new&status=open>`_
+* `Issue Tracker <https://github.com/ronaldoussoren/altgraph/issues>`_
 
-* `Repository <https://bitbucket.org/ronaldoussoren/altgraph/>`_
+* `Repository <https://github.com/ronaldoussoren/altgraph/>`_
