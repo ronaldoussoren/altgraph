@@ -22,13 +22,9 @@ import sys
 from distutils import log
 from fnmatch import fnmatch
 
+from configparser import RawConfigParser, NoOptionError, NoSectionError
 from setuptools import Command, setup
 from setuptools.command import egg_info
-
-if sys.version_info[0] == 2:
-    from ConfigParser import RawConfigParser, NoOptionError, NoSectionError
-else:
-    from configparser import RawConfigParser, NoOptionError, NoSectionError
 
 ROOTDIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -238,12 +234,6 @@ def parse_setup_cfg():
             metadata["entry_points"] = {}
 
         metadata["entry_points"]["console_scripts"] = v.splitlines()
-
-    if sys.version_info[:2] <= (2, 6):
-        try:
-            metadata["tests_require"] += ", unittest2"
-        except KeyError:
-            metadata["tests_require"] = "unittest2"
 
     return metadata
 
