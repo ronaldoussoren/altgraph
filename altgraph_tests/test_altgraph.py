@@ -1,6 +1,4 @@
 #!/usr/bin/env py.test
-import os
-import sys
 import unittest
 
 from altgraph import Graph, GraphAlgo
