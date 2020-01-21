@@ -1,13 +1,9 @@
 import sys
 import unittest
+from io import StringIO
 
 from altgraph.Graph import Graph
 from altgraph.ObjectGraph import ObjectGraph
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
 
 
 class Node:
