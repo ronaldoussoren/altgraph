@@ -11,7 +11,7 @@ from altgraph.Graph import Graph
 from altgraph.GraphUtil import filter_stack
 
 
-class ObjectGraph(object):
+class ObjectGraph:
     """
     A graph of objects that have a "graphident" attribute.
     graphident is the key for the object in the graph
@@ -27,7 +27,7 @@ class ObjectGraph(object):
         graph.add_node(self, None)
 
     def __repr__(self):
-        return "<%s>" % (type(self).__name__,)
+        return "<{}>".format(type(self).__name__)
 
     def flatten(self, condition=None, start=None):
         """
@@ -193,7 +193,7 @@ class ObjectGraph(object):
         Print a debug message with the given level
         """
         if s and level <= self.debug:
-            print("%s%s %s" % ("  " * self.indent, s, " ".join(map(repr, args))))
+            print("{}{} {}".format("  " * self.indent, s, " ".join(map(repr, args))))
 
     def msgin(self, level, s, *args):
         """

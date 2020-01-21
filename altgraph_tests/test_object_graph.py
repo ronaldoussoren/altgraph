@@ -10,7 +10,7 @@ except ImportError:
     from io import StringIO
 
 
-class Node(object):
+class Node:
     def __init__(self, graphident):
         self.graphident = graphident
 
@@ -19,14 +19,14 @@ class SubNode(Node):
     pass
 
 
-class ArgNode(object):
+class ArgNode:
     def __init__(self, graphident, *args, **kwds):
         self.graphident = graphident
         self.args = args
         self.kwds = kwds
 
     def __repr__(self):
-        return "<ArgNode %s>" % (self.graphident,)
+        return "<ArgNode {}>".format(self.graphident)
 
 
 class TestObjectGraph(unittest.TestCase):

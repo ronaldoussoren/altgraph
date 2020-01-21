@@ -21,7 +21,7 @@ class TestDot(unittest.TestCase):
         self.assertEqual(dot.neato, "neato")
         self.assertEqual(dot.type, "digraph")
 
-        self.assertEqual(dot.nodes, dict([(x, {}) for x in g]))
+        self.assertEqual(dot.nodes, {x: {} for x in g})
 
         edges = {}
         for head in g:
@@ -54,7 +54,7 @@ class TestDot(unittest.TestCase):
         self.assertEqual(dot.neato, "/usr/local/bin/neato")
         self.assertEqual(dot.type, "graph")
 
-        self.assertEqual(dot.nodes, dict([(x, {"label": x}) for x in [1, 2]]))
+        self.assertEqual(dot.nodes, {x: {"label": x} for x in [1, 2]})
 
         edges = {}
         for head in [1, 2]:
@@ -147,11 +147,11 @@ class TestDot(unittest.TestCase):
             self.assertTrue(isinstance(item, str))
 
         first = list(dot.iterdot())[0]
-        self.assertEqual(first, "digraph %s {\n" % (dot.name,))
+        self.assertEqual(first, "digraph {} {{\n".format(dot.name))
 
         dot.type = "graph"
         first = list(dot.iterdot())[0]
-        self.assertEqual(first, "graph %s {\n" % (dot.name,))
+        self.assertEqual(first, "graph {} {{\n".format(dot.name))
 
         dot.type = "foo"
         self.assertRaises(GraphError, list, dot.iterdot())

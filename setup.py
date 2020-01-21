@@ -19,10 +19,10 @@ import os
 import platform
 import re
 import sys
+from configparser import NoOptionError, NoSectionError, RawConfigParser
 from distutils import log
 from fnmatch import fnmatch
 
-from configparser import RawConfigParser, NoOptionError, NoSectionError
 from setuptools import Command, setup
 from setuptools.command import egg_info
 
@@ -132,11 +132,11 @@ def _map_requirement(value):
             if v[0].isdigit():
                 # Checks for a specific version prefix
                 m = v.rsplit(".", 1)
-                mapped.append(">=%s,<%s.%s" % (v, m[0], int(m[1]) + 1))
+                mapped.append(">={},<{}.{}".format(v, m[0], int(m[1]) + 1))
 
             else:
                 mapped.append(v)
-        return "%s %s" % (name, ",".join(mapped))
+        return "{} {}".format(name, ",".join(mapped))
 
 
 def _as_requires(value):
@@ -279,7 +279,7 @@ def importExternalTestCases(unittest, pathPattern="test_*.py", root=".", package
         try:
             module = __import__(modName)
         except ImportError:
-            print("SKIP %s: %s" % (modName, sys.exc_info()[1]))
+            print("SKIP {}: {}".format(modName, sys.exc_info()[1]))
             continue
 
         if "." in modName:
@@ -331,7 +331,9 @@ class my_test(Command):
                 to_remove.append(dirname)
 
         for dirname in to_remove:
-            log.info("removing installed %r from sys.path before testing" % (dirname,))
+            log.info(
+                "removing installed {!r} from sys.path before testing".format(dirname)
+            )
             sys.path.remove(dirname)
 
     def add_project_to_sys_path(self):
@@ -366,7 +368,7 @@ class my_test(Command):
         # Reset pkg_resources state:
         add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
-        require("%s==%s" % (ei_cmd.egg_name, ei_cmd.egg_version))
+        require("{}=={}".format(ei_cmd.egg_name, ei_cmd.egg_version))
 
     def remove_from_sys_path(self):
         from pkg_resources import working_set
@@ -403,7 +405,7 @@ class my_test(Command):
                 "xpass": len(getattr(result, "expectedSuccesses", [])),
                 "skip": len(getattr(result, "skipped", [])),
             }
-            print("SUMMARY: %s" % (summary,))
+            print("SUMMARY: {}".format(summary))
             if summary["fails"] or summary["errors"]:
                 sys.exit(1)
 

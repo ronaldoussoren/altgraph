@@ -114,7 +114,7 @@ import warnings
 from altgraph import GraphError
 
 
-class Dot(object):
+class Dot:
     """
     A  class providing a **graphviz** (dot language) representation
     allowing a fine grained control over how the graph is being
@@ -200,12 +200,12 @@ class Dot(object):
 
         if mode == "neato":
             self.save_dot(self.temp_neo)
-            neato_cmd = "%s -o %s %s" % (self.neato, self.temp_dot, self.temp_neo)
+            neato_cmd = "{} -o {} {}".format(self.neato, self.temp_dot, self.temp_neo)
             os.system(neato_cmd)
         else:
             self.save_dot(self.temp_dot)
 
-        plot_cmd = "%s %s" % (self.dotty, self.temp_dot)
+        plot_cmd = "{} {}".format(self.dotty, self.temp_dot)
         os.system(plot_cmd)
 
     def node_style(self, node, **kwargs):
@@ -228,28 +228,28 @@ class Dot(object):
         Modifies an edge style to the dot representation.
         """
         if tail not in self.nodes:
-            raise GraphError("invalid node %s" % (tail,))
+            raise GraphError("invalid node {}".format(tail))
 
         try:
             if tail not in self.edges[head]:
                 self.edges[head][tail] = {}
             self.edges[head][tail] = kwargs
         except KeyError:
-            raise GraphError("invalid edge  %s -> %s " % (head, tail))
+            raise GraphError("invalid edge  {} -> {} ".format(head, tail))
 
     def iterdot(self):
         # write graph title
         if self.type == "digraph":
-            yield "digraph %s {\n" % (self.name,)
+            yield "digraph {} {{\n".format(self.name)
         elif self.type == "graph":
-            yield "graph %s {\n" % (self.name,)
+            yield "graph {} {{\n".format(self.name)
 
         else:
-            raise GraphError("unsupported graphtype %s" % (self.type,))
+            raise GraphError("unsupported graphtype {}".format(self.type))
 
         # write overall graph attributes
         for attr_name, attr_value in sorted(self.attr.items()):
-            yield '%s="%s";' % (attr_name, attr_value)
+            yield '{}="{}";'.format(attr_name, attr_value)
         yield "\n"
 
         # some reusable patterns
@@ -258,7 +258,7 @@ class Dot(object):
 
         # write node attributes
         for node_name, node_attr in sorted(self.nodes.items()):
-            yield '\t"%s" [' % (node_name,)
+            yield '\t"{}" ['.format(node_name)
             for attr_name, attr_value in sorted(node_attr.items()):
                 yield cpatt % (attr_name, attr_value)
             yield epatt
@@ -267,9 +267,9 @@ class Dot(object):
         for head in sorted(self.edges):
             for tail in sorted(self.edges[head]):
                 if self.type == "digraph":
-                    yield '\t"%s" -> "%s" [' % (head, tail)
+                    yield '\t"{}" -> "{}" ['.format(head, tail)
                 else:
-                    yield '\t"%s" -- "%s" [' % (head, tail)
+                    yield '\t"{}" -- "{}" ['.format(head, tail)
                 for attr_name, attr_value in sorted(self.edges[head][tail].items()):
                     yield cpatt % (attr_name, attr_value)
                 yield epatt
@@ -304,18 +304,15 @@ class Dot(object):
 
         if mode == "neato":
             self.save_dot(self.temp_neo)
-            neato_cmd = "%s -o %s %s" % (self.neato, self.temp_dot, self.temp_neo)
+            neato_cmd = "{} -o {} {}".format(self.neato, self.temp_dot, self.temp_neo)
             os.system(neato_cmd)
             plot_cmd = self.dot
         else:
             self.save_dot(self.temp_dot)
             plot_cmd = self.dot
 
-        file_name = "%s.%s" % (file_name, file_type)
-        create_cmd = "%s -T%s %s -o %s" % (
-            plot_cmd,
-            file_type,
-            self.temp_dot,
-            file_name,
+        file_name = "{}.{}".format(file_name, file_type)
+        create_cmd = "{} -T{} {} -o {}".format(
+            plot_cmd, file_type, self.temp_dot, file_name
         )
         os.system(create_cmd)

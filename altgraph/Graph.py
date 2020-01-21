@@ -18,7 +18,7 @@ from collections import deque
 from altgraph import GraphError
 
 
-class Graph(object):
+class Graph:
     """
     The Graph class represents a directed graph with *N* nodes and *E* edges.
 
@@ -56,7 +56,7 @@ class Graph(object):
                     head, tail, data = item
                     self.add_edge(head, tail, data)
                 else:
-                    raise GraphError("Cannot create edge from %s" % (item,))
+                    raise GraphError("Cannot create edge from {}".format(item))
 
     def __repr__(self):
         return "<Graph: %d nodes, %d edges>" % (
@@ -114,7 +114,7 @@ class Graph(object):
             self.nodes[tail_id][0].append(edge)
             self.nodes[head_id][1].append(edge)
         except KeyError:
-            raise GraphError("Invalid nodes %s -> %s" % (head_id, tail_id))
+            raise GraphError("Invalid nodes {} -> {}".format(head_id, tail_id))
 
         # store edge information
         self.edges[edge] = (head_id, tail_id, edge_data)
