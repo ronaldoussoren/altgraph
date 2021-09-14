@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.17.2
+------
+
+* Change in setup.py to fix the sidebar links on PyPI
+
 0.17.1
 ------
 
