@@ -1,6 +1,11 @@
 Release history
 ===============
 
+0.17.3
+------
+
+* Update classifiers for Python 3.11
+
 0.17.2
 ------
 
