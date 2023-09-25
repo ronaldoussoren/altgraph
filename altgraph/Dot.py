@@ -286,7 +286,7 @@ class Dot(object):
         """
 
         if not file_name:
-            warnings.warn(DeprecationWarning, "always pass a file_name")
+            warnings.warn(DeprecationWarning, "always pass a file_name", stacklevel=2)
             file_name = self.temp_dot
 
         with open(file_name, "w") as fp:
@@ -299,7 +299,7 @@ class Dot(object):
         """
 
         if not file_name:
-            warnings.warn(DeprecationWarning, "always pass a file_name")
+            warnings.warn(DeprecationWarning, "always pass a file_name", stacklevel=2)
             file_name = "out"
 
         if mode == "neato":

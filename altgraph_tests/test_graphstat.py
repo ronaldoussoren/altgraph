@@ -37,7 +37,6 @@ class TestDegreesDist(unittest.TestCase):
 
 class TestBinning(unittest.TestCase):
     def test_simple(self):
-
         # Binning [0, 100) into 10 bins
         a = list(range(100))
         out = GraphStat._binning(a, limits=(0, 100), bin_num=10)

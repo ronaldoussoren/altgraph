@@ -34,7 +34,7 @@ def degree_dist(graph, limits=(0, 0), bin_num=10, mode="out"):
     return results
 
 
-_EPS = 1.0 / (2.0 ** 32)
+_EPS = 1.0 / (2.0**32)
 
 
 def _binning(values, limits=(0, 0), bin_num=10):

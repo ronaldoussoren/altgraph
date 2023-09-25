@@ -2,15 +2,15 @@ default_language_version:
     python: python3.9
 repos:
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 23.9.1
     hooks:
       - id: black
         # override until resolved: https://github.com/ambv/black/issues/402
         files: \.pyi?$
         types: []
 
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
     hooks:
       - id: flake8
         exclude: ^altgraph_tests/
@@ -23,19 +23,19 @@ repos:
         - flake8-mutable
         - flake8-todo
 
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.2.0
-    hooks:
-      - id: seed-isort-config
+#  - repo: https://github.com/asottile/seed-isort-config
+#    rev: v2.2.0
+#    hooks:
+#      - id: seed-isort-config
 
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.10.1
-    hooks:
-      - id: isort
-        additional_dependencies: [toml]
+#  - repo: https://github.com/pre-commit/mirrors-isort
+#    rev: v5.10.1
+#    hooks:
+#      - id: isort
+#        additional_dependencies: [toml]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

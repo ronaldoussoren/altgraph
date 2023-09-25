@@ -5,12 +5,6 @@ graphviz output.
 altgraph includes some additional usage of Python 2.6+ features and
 enhancements related to modulegraph and macholib.
 
-CI status
----------
-
-.. image:: https://github.com/ronaldoussoren/altgraph/workflows/Lint/badge.svg
-.. image:: https://github.com/ronaldoussoren/altgraph/workflows/Test/badge.svg
-
 Project links
 -------------
 
