@@ -139,9 +139,18 @@ To display the graph we can use the GraphViz backend::
   @contributor: U{Reka Albert <http://www.phys.psu.edu/~ralbert/>}
 
 """
-import pkg_resources
+try:
+    from importlib.metadata import version
+except ImportError:  # Python <3.8
+    try:
+        from importlib_metadata import version
+    except ImportError:  # Python <3.8 and no importlib_metadata backport installed
+        from pkg_resources import require
 
-__version__ = pkg_resources.require("altgraph")[0].version
+        def version(distribution_name):
+            return require(distribution_name)[0].version
+
+__version__ = version("altgraph")
 
 
 class GraphError(ValueError):
