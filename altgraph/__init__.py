@@ -139,6 +139,7 @@ To display the graph we can use the GraphViz backend::
   @contributor: U{Reka Albert <http://www.phys.psu.edu/~ralbert/>}
 
 """
+
 import pkg_resources
 
 __version__ = pkg_resources.require("altgraph")[0].version

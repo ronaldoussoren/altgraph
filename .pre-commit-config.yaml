@@ -2,7 +2,7 @@ default_language_version:
     python: python3.9
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.9.1
+    rev: 25.1.0
     hooks:
       - id: black
         # override until resolved: https://github.com/ambv/black/issues/402
@@ -10,7 +10,7 @@ repos:
         types: []
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
+    rev: 7.2.0
     hooks:
       - id: flake8
         exclude: ^altgraph_tests/
@@ -35,7 +35,7 @@ repos:
 #        additional_dependencies: [toml]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

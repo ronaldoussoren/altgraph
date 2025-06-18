@@ -1,1 +1,1 @@
-""" altgraph tests """
+"""altgraph tests"""

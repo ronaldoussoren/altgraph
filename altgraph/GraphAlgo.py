@@ -2,6 +2,7 @@
 altgraph.GraphAlgo - Graph algorithms
 =====================================
 """
+
 from altgraph import GraphError
 
 
