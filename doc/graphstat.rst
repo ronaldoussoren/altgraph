@@ -16,7 +16,7 @@ be added later.
    in that bin.
 
    When the *limits* argument is present it must be a tuple with
-   the mininum and maximum number of edges that get binned (that
+   the minimum and maximum number of edges that get binned (that
    is, when *limits* is ``(4, 10)`` only nodes with between 4
    and 10 edges get counted.
 

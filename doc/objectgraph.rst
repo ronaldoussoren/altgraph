@@ -1,4 +1,4 @@
-:mod:`altgraph.ObjectGraph` --- Graphs of objecs with an identifier
+:mod:`altgraph.ObjectGraph` --- Graphs of objects with an identifier
 ===================================================================
 
 .. module:: altgraph.ObjectGraph
@@ -88,7 +88,7 @@
 .. method:: ObjectGraph.flatten([condition[, start]])
 
    Yield all nodes that are entirely reachable by *condition*
-   starting fromt he given *start* node or the graph root.
+   starting from the given *start* node or the graph root.
 
    .. note:: objects are only reachable from the graph root
       when there is a reference from the root to the node

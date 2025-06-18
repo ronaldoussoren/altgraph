@@ -168,7 +168,7 @@ Bugfixes:
 Features:
 
 - The ``altgraph.Graph`` constructor now accepts an argument
-  that contains 2- and 3-tuples instead of requireing that
+  that contains 2- and 3-tuples instead of requiring that
   all items have the same size. The (optional) argument can now
   also be any iterator.
 

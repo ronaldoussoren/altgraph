@@ -2,7 +2,7 @@
 ==================================================
 
 .. module:: altgraph.GraphAlgo
-   :synopsis: Basic graphs algoritms
+   :synopsis: Basic graphs algorithms
 
 .. function:: dijkstra(graph, start[, end])
 

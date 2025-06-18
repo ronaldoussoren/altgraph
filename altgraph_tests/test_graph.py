@@ -442,7 +442,7 @@ class TestGraph(unittest.TestCase):
             ["1", "1.3", "1.2", "1.2.2", "1.2.2.3", "1.2.2.2", "1.2.2.1", "1.2.1"],
         )
 
-        # Introduce cyle:
+        # Introduce cycle:
         graph.add_edge("1", "1.2")
         result = list(graph.iterdfs("1", forward=False))
         self.assertEqual(

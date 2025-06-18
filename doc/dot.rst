@@ -13,7 +13,7 @@ while transparently exposing most of its features.
 
 To display the graphs or to generate image files the `graphviz`_
 package needs to be installed on the system, moreover the :command:`dot` and :command:`dotty` programs must
-be accesible in the program path so that they can be ran from processes spawned
+be accessible in the program path so that they can be ran from processes spawned
 within the module.
 
 Example usage

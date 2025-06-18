@@ -38,7 +38,7 @@ or less useful utility functions.
 
 .. function:: filter_stack(graph, head, filters)
 
-   Perform a depth-first oder walk of the graph starting at *head* and
+   Perform a depth-first order walk of the graph starting at *head* and
    apply all filter functions in *filters* on the node data of the nodes
    found.
 

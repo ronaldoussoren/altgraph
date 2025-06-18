@@ -48,7 +48,7 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(self.g.forw_bfs(1), [1, 2, 3, 4, 5, 7, 8, 13, 11, 10, 12, 9])
 
     def test_get_hops(self):
-        # diplay the hops and hop numbers between nodes
+        # display the hops and hop numbers between nodes
         self.assertEqual(
             self.g.get_hops(1, 8),
             [(1, 0), (2, 1), (3, 1), (4, 2), (5, 3), (7, 4), (8, 5)],

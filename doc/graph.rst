@@ -85,7 +85,7 @@ Node related methods
    .. note::
 
       the edge lists should not be modified, doing so
-      can result in unpredicatable behavior.
+      can result in unpredictable behavior.
 
 .. method:: Graph.__contains__(node)
 
@@ -210,12 +210,12 @@ Graph traversal
 .. method:: Graph.forw_topo_sort()
 
    Return a list of nodes where the successors (based on outgoing
-   edges) of any given node apear in the sequence after that node.
+   edges) of any given node appear in the sequence after that node.
 
 .. method:: Graph.back_topo_sort()
 
    Return a list of nodes where the successors (based on incoming
-   edges) of any given node apear in the sequence after that node.
+   edges) of any given node appear in the sequence after that node.
 
 .. method:: Graph.forw_bfs_subgraph(start_id)
 
@@ -271,7 +271,7 @@ Graph traversal
 
    Computes the hop distance to all nodes centered around a specified node.
 
-   First order neighbours are at hop 1, their neigbours are at hop 2 etc.
+   First order neighbours are at hop 1, their neighbours are at hop 2 etc.
    Uses :py:meth:`forw_bfs` or :py:meth:`back_bfs` depending on the value of
    the forward parameter.
 
