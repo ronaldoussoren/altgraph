@@ -357,9 +357,6 @@ class my_test(Command):
             sys.path.remove(dirname)
 
     def add_project_to_sys_path(self):
-        from pkg_resources import normalize_path, add_activation_listener
-        from pkg_resources import working_set, require
-
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
         self.reinitialize_command("build_ext", inplace=1)
@@ -372,9 +369,7 @@ class my_test(Command):
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
 
-        ei_cmd = self.get_finalized_command("egg_info")
-        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
-        sys.path.insert(1, os.path.dirname(__file__))
+        sys.path.insert(0, os.path.dirname(__file__))
 
         # Strip the namespace packages defined in this distribution
         # from sys.modules, needed to reset the search path for
@@ -385,18 +380,8 @@ class my_test(Command):
             for nm in nspkgs:
                 del sys.modules[nm]
 
-        # Reset pkg_resources state:
-        add_activation_listener(lambda dist: dist.activate())
-        working_set.__init__()
-        require("%s==%s" % (ei_cmd.egg_name, ei_cmd.egg_version))
-
     def remove_from_sys_path(self):
-        from pkg_resources import working_set
-
-        sys.path[:] = self.__old_path
-        sys.modules.clear()
-        sys.modules.update(self.__old_modules)
-        working_set.__init__()
+        pass
 
     def run(self):
         import unittest

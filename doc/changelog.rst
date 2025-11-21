@@ -1,6 +1,18 @@
 Release history
 ===============
 
+0.17.5
+------
+
+* Update classifiers for Python 3.13 and 3.14
+
+* Drop dependency on "pkg_resources"
+
+0.17.4
+------
+
+* Update classifiers for Python 3.12
+
 0.17.3
 ------
 
